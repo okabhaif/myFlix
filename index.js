@@ -54,7 +54,7 @@ app.get('/movies', function(req, res, next) {
 });
 
 app.get('/', function (req, res, next) {
-  res.send('NOTATO!!');
+  res.send('Welcome!');
   next()
 });
 
