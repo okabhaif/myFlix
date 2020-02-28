@@ -187,7 +187,7 @@ app.get('/users', function(req, res, next) {
   next();
 });
 
-//gets a user by id as there may be multiple users with the same name
+//gets a user by id as there may be multiple users with the same name / usernames
 app.get('/users/:id', (req, res) => {
   res.json(users.find( (user) => {
     return user.id === req.params.id
@@ -202,19 +202,19 @@ app.post('/users', (req, res, next) => {
 
   if(!newUser.name) {
     const message = 'Missing "name" in request body';
-    res.status(400).send(message);
+    res.status(404).send(message);
   }
   if(!newUser.username) {
     const message = 'Missing "username" in request body';
-    res.status(400).send(message);
+    res.status(404).send(message);
   }
   if(!newUser.password) {
     const message = 'Missing "password" in request body';
-    res.status(400).send(message);
+    res.status(404).send(message);
   }
   if(!newUser.email) {
     const message = 'Missing "email" in request body';
-    res.status(400).send(message);
+    res.status(404).send(message);
   }
   else {
     newUser.id = uuid.v4();
@@ -226,7 +226,7 @@ app.post('/users', (req, res, next) => {
 
 //allows user to update their information (https://stackoverflow.com/questions/35206125/javascript-es6-es5-find-in-array-and-change)
 app.put('/users/:id', (req, res, next) => {
-  //finds user object index within users array,
+  //finds user object by index within users array,
   let userIndex = users.findIndex((user) => {return user.id === req.params.id});
   const user = users[userIndex];
   let newData = req.body;
@@ -250,7 +250,7 @@ app.delete('/users/:id', (req, res, next) => {
 
   if (!user) {
       const message = 'Unable to find user ID:' + req.params.id + '.';
-      res.status(400).send(message);
+      res.status(404).send(message);
   }
   else {
     users = users.filter(function(obj) { return obj.id !== req.params.id });
@@ -261,8 +261,6 @@ app.delete('/users/:id', (req, res, next) => {
 
 //deletes a movie from user's favourites list
 app.delete('/users/:id/:favourites/:title', (req, res, next) => {
-  //finds user in users array by object index + returns by selection of unique id
-
   let userIndex = users.findIndex((user) => {return user.id === req.params.id});
   let movieIndex = users[userIndex].favourites.findIndex((movie) => {return movie.title === req.params.title});
 
@@ -282,16 +280,12 @@ app.delete('/users/:id/:favourites/:title', (req, res, next) => {
 
 //FAVOURITES --- creates and pushes a movie object to a specific user's (id) favourites array.
 app.post('/users/:id/:favourites/:title', (req, res, next) => {
-  //finding user by their ID
   let userIndex = users.findIndex((user) => {return user.id === req.params.id});
-  //finding movie by title name
   let movie = topMovies.find((movie) => {return movie.title === req.params.title});
 
-//if no movie send error
   if (!movie) {
     res.status(404).send('Movie named: ' + req.params.title + 'not found!');
   }
-  //if no user send error
   else if (userIndex < 0) {
     res.status(404).send('User ID: ' + req.params.id + 'not found!');
   }
