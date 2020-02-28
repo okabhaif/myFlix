@@ -18,5 +18,91 @@
       will be able to sign up, update their personal information, and create a list of their favorite
       movies.
     </p>
+
+    <h1>
+      Parameters
+    </h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>/:movies</td>
+          <td>Description : This endpoint retrieves data on all movies stored (including their: title, description, genres, director, image url).</td>
+          <td>http://localhost:8080/movies</td>
+        </tr>
+        <tr>
+          <td>/:movies/:title</td>
+          <td>Description : This endpoint retrieves all data about one specific movie selected by its title name (including: title, description, genres, director, image url)</td>
+          <td>http://localhost:8080/movies/The%20Dark%Knight</td>
+        </tr>
+        <tr>
+          <td>/:directors/:name</td>
+          <td>Description : This endpoint retrieves all data about one specific director selected by their name (including: name, bio, dob)</td>
+          <td>http://localhost:8080/directors/Christopher%20Nolan</td>
+        </tr>
+        <tr>
+          <td>/:genres/:name</td>
+          <td>Description : This endpoint retrieves all data about one specific genre selected by its name (including: name & description)</td>
+          <td>http://localhost:8080/genres/Comedy</td>
+        </tr>
+        <tr>
+          <td>:directors/:name</td>
+          <td>Description : This endpoint retrieves all data about one specific director selected by their name (including: name, bio, dob)</td>
+          <td>http://localhost:8080/:directors/Christopher%20Nolan</td>
+        </tr>
+        <tr>
+          <td>/:users</td>
+          <td>Description : This endpoint retrieves all users information (id, username, name, dob, password, email and included an array of their favourite films). It also allows users to be added, new user data is required to be of a JSON object format,
+            {
+              id : '823762',
+              username : 'JohnDoe123',
+              name: 'John Doe',
+              dob : '12/12/12',
+              password :'JohnDoe123',
+              email : 'JohnDoe123@johndoe.com',
+              favourites : [ ]
+            }
+            Each time a new user is POST-ed, a random unique id is assigned to them using the UUID module to prevent multiple username related conflicts.
+           </td>
+          <td>http://localhost:8080/users</td>
+        </tr>
+        <tr>
+          <td>/:users/:id</td>
+          <td>Description : This endpoint retrieves all information about a user as selected by their unique identification number (id). The result is in JSON object format and includes: id, username, name, dob, password, email and included an array of their favourite films).
+              As each id is unique to a user, many further functions can be achieved at this endpoint. Users can update their information using PUT requests, their information must follow the JSON object format as follows:
+              {
+                id : '823762',
+                username : 'JohnDoe123',
+                name: 'John Doe',
+                dob : '12/12/12',
+                password :'JohnDoe123',
+                email : 'JohnDoe123@johndoe.com',
+              }
+              This endpoint can also be used to delete user information using (DELETE) requests, and the users unique identification number (id) as a selection parameter to enable accurate de-deregistration.</td>
+          <td>http://localhost:8080/users/823762</td>
+        </tr>
+        <td>/:users/:id/:favourites/:title</td>
+        <td>Description : This endpoint allows users to both add new movies selected by movie_title to their favourites list (POST) or delete movies from their favourites based on the movie_title. Each movie is presented and stored as a JSON object as fokkows:
+           {
+            title : 'The Beach',
+            description: 'Vicenarian Richard travels to Thailand and finds himself in possession of a strange map. Rumours state that it leads to a solitary beach paradise, a tropical bliss. Excited and intrigued, he sets out to find it.',
+            genres: 'Adventure, Drama, Romance, Thriller',
+            director : 'Danny Boyle',
+            image :  'https://m.media-amazon.com/images/M/MV5BNTljZTUzYWUtOTI4YS00NmZlLWE5MmQtZjFlZDZhNjg4MjQxXkEyXkFqcGdeQXVyNTc1NTQxODI@._V1_.jpg',
+            }
+          </td>
+        <td>http://localhost:8080/users/823762/favourites/The%20Dark%20Knight</td>
+      </tr>
+
+
+      </tbody>
+    </table>
+
   </body>
 </html>
