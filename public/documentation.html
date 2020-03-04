@@ -41,17 +41,27 @@
               Example return: based on endpoint /movies
             [
               {
+                 movie_id : 126385,
                  title : 'The Beach',
                  description: 'Vicenarian Richard travels to Thailand and finds himself in possession of a strange map. Rumours state that it leads to a solitary beach paradise, a tropical bliss. Excited and intrigued, he sets out to find it.',
                  genres: 'Adventure, Drama, Romance, Thriller',
-                 director : 'Danny Boyle',
+                 director: { 'Name' : 'Danny Boyle'
+                              'Bio' : '...information about director..',
+                              'DOB' : '1956-10-20'
+                            },
                  image :  'https://m.media-amazon.com/images/M/MV5BNTljZTUzYWUtOTI4YS00NmZlLWE5MmQtZjFlZDZhNjg4MjQxXkEyXkFqcGdeQXVyNTc1NTQxODI@._V1_.jpg',
                },
                {
+                 movie_id : 236745,
                  title : 'V for Vendetta',
                  description : 'In a future British tyranny, a shadowy freedom fighter, known only by the alias of "V", plots to overthrow it with the help of a young woman.',
-                 genres : 'Action, Drama, Sci-Fi, Thriller',
-                 director : 'James McTeigue',
+                 genre : { 'Name' : 'Adventure';
+                           'Description': 'information about genre....'
+                         },
+                 director: { 'Name' : 'James McTeigue'
+                              'Bio' : '...information about director..',
+                              'DOB' : '1967-12-29'
+                            },
                  image : 'https://upload.wikimedia.org/wikipedia/en/9/9f/Vforvendettamov.jpg'
                },
              ];
@@ -60,14 +70,20 @@
         </tr>
         <tr>
           <td>Show information about a movie</td>
-          <td>GET req=/[:movies]/[:movie_title]</td>
-          <td>Description : This endpoint retrieves all data about one specific movie selected by its title, a JSON object specific to that movie should be returned.
+          <td>GET req=/[:movies]/[:title]</td>
+          <td>Description : This endpoint retrieves all data about one specific movie selected by its title, a JSON object specific to that movie should be returned. Users can also find a specific movie by movie_id in the same way (endpoint /movies/236745).
               Example return: based on endpoint /movies/VforVendetta
               {
+                movie_id: 236745,
                 title : 'V for Vendetta',
                 description : 'In a future British tyranny, a shadowy freedom fighter, known only by the alias of "V", plots to overthrow it with the help of a young woman.',
-                genres : 'Action, Drama, Sci-Fi, Thriller',
-                director : 'James McTeigue',
+                genre : {'Name' : 'Thriller';
+                          'Description': 'information about genre....'
+                        },
+                director: { 'Name' : 'James McTeigue'
+                             'Bio' : '...information about director..',
+                             'DOB' : '1967-12-29'
+                           },
                 image : 'https://upload.wikimedia.org/wikipedia/en/9/9f/Vforvendettamov.jpg'
               },
             </td>
@@ -75,9 +91,9 @@
         </tr>
         <tr>
           <td>Show information about a director</td>
-          <td>GET req=[/directors]/[:director_name]</td>
+          <td>GET req=[/movies]/[:director.Name]</td>
           <td>Description : This endpoint retrieves all data about one specific director selected by their name. A JSON object should be returned with the Director's information.
-              Example return: based on endpoint /directors/GuillermodelToro
+              Example return: based on endpoint /movies/GuillermodelToro
               {
                 name : 'Guillermo del Toro',
                 dob : '9 October 1964',
@@ -88,7 +104,7 @@
         </tr>
         <tr>
           <td>Show information about a genre</td>
-          <td>GET req =[/genres]/[:genre_name]</td>
+          <td>GET req =[/movies]/[:genre_name]</td>
           <td>Description : This endpoint retrieves all data about one specific genre selected by its name, and should return a JSON object.
               Example return: based on endpoint /genres/Comedy
               {
@@ -112,7 +128,7 @@
                   dob : '12/12/12',
                   password :'JohnDoe123',
                   email : 'JohnDoe123@johndoe.com',
-                  favourites : [...]
+                  favourite_movies : [...]
                 },
                 {
                   id : '888833242',
@@ -121,7 +137,7 @@
                   dob : '12/12/12',
                   password :'JaneDoe123',
                   email : 'JaneDoe123@janedoe.com',
-                  favourites : [...]
+                  favourite_movies : [...]
                 },
               ]
            </td>
@@ -139,7 +155,7 @@
                 dob : '12/12/12',
                 password :'JohnDoe123',
                 email : 'JohnDoe123@johndoe.com',
-                favourites : [...]
+                favourite_movies : [...]
               }
           </td>
           <td>Success : 200 / Error : 400</td>
@@ -155,7 +171,7 @@
                 dob : '12/12/12',
                 password :'JohnDoe123',
                 email : 'JohnDoe123@johndoe.com',
-                favourites : [...]
+                favourite_movies : [...]
               }
               returns :
               {
@@ -165,7 +181,7 @@
                 dob : '12/12/12',
                 password :'JohnDoe123',
                 email : 'JohnDoe123@johndoe.com',
-                favourites : [...]
+                favourite_movies : [...]
               }
           </td>
           <td>Success : 201 / Error : 404</td>
@@ -194,7 +210,7 @@
                 dob : '12/12/12',
                 password :'JohnDoe123',
                 email : 'JohnDoe123@johndoe.com',
-                favourites : [...]
+                favourite_movies : [...]
               }
 
               Example put request: based on /users/823762
@@ -210,7 +226,7 @@
                 dob : '12/12/12',
                 password :'JohnDoe123',
               * email : 'janedoe@janedoe.com',
-                favourites : [...]
+                favourite_movies : [...]
               }
 
           </td>
@@ -218,18 +234,18 @@
         </tr>
         <tr>
           <td>Add a movie to favourits</td>
-          <td>POST req =[/users]/[:id][/favourites]/[:title]</td>
-          <td>Description : This endpoint first selects a user from the database using their unique identification number, this then allows users to add [post] new movies selected by movie_title to their favourites list stored under their user id. They can do so by searching movies via their title (in text format). Users are then expected to be returned a text response containing the movie information if successfully updated. Users can then check their list to see the corresponding JSON object added to their favourites.
-              For example user/823762/favourites POSTs a request to add "The Beach" post(user/823762/favourites/The%20Beach)
+          <td>POST req =[/users]/[:id][/favourite_movies]/[:movie_title]</td>
+          <td>Description : This endpoint first selects a user from the database using their unique identification number, this then allows users to add [post] new movies selected by movie_title (also able to select by movie_id) to their favourites list stored under their user id. They can do so by searching movies via their title (in text format). Users are then expected to be returned a text response containing the movie information if successfully updated. Users can then check their list to see the corresponding JSON object added to their favourites.
+              For example user/823762/favourite_movies POSTs a request to add "The Beach" post(user/823762/favourite_movies/The%20Beach)
               This should return a text response stating that "This movie The Beach has been added to your list of favourites!!"
           </td>
         <td>Success : 201 / Error : 404</td>
       </tr>
       <tr>
         <td>Delete a movie from favourits</td>
-        <td>POST req =[/users]/[:id][/favourites]/[:title]</td>
+        <td>POST req =[/users]/[:id][/favourite_movies]/[:movie_id]</td>
         <td>Description : This endpoint first selects a user from the database using their unique identification number, and finds their corresponding "favourites" list. At this point users can send requests to [delete] movies from their list. They can do so by searching movies via their title (in text format) and sending out a delete request. Users are then expected to be returned a text response containing a successful deletion message (see below). Users can then check their favourites list to see the corresponding movie object has been deleted.
-            For example user/823762/favourites/ requests to DELETE "The Beach" delete(user/823762/favourites/The%20Beach)
+            For example user/823762/favourite_movies/ requests to DELETE "The Beach" delete(user/823762/favourite_movies/The%20Beach)
             This should return a text response stating that "This movie The Beach has been deleted."
         </td>
         <td>Success : 201 / Error : 404</td>
