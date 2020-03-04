@@ -36,7 +36,7 @@
 
         <tr>
           <td>Show All Movies</td>
-          <td>GET  req=[/movies]</td>
+          <td>GET  req=/[movies]</td>
           <td>Description : This endpoint gets data on all movies listed in the API, an array of movies should be returned in JSON format.
               Example return: based on endpoint /movies
             [
@@ -66,11 +66,11 @@
                },
              ];
           </td>
-          <td>Success : 200 / Error : 400 </td>
+          <td>Success : 200 / Error : 500 </td>
         </tr>
         <tr>
           <td>Show information about a movie</td>
-          <td>GET req=/[:movies]/[:title]</td>
+          <td>GET req=/[movies]/[:title]</td>
           <td>Description : This endpoint retrieves all data about one specific movie selected by its title, a JSON object specific to that movie should be returned. Users can also find a specific movie by movie_id in the same way (endpoint /movies/236745).
               Example return: based on endpoint /movies/VforVendetta
               {
@@ -87,11 +87,11 @@
                 image : 'https://upload.wikimedia.org/wikipedia/en/9/9f/Vforvendettamov.jpg'
               },
             </td>
-          <td>Success : 200 / Error : 400t</td>
+          <td>Success : 201 / Error : 404/500</td>
         </tr>
         <tr>
           <td>Show information about a director</td>
-          <td>GET req=[/movies]/[:director.Name]</td>
+          <td>GET req=/[movies]/[directors]/[:Name]</td>
           <td>Description : This endpoint retrieves all data about one specific director selected by their name. A JSON object should be returned with the Director's information.
               Example return: based on endpoint /movies/GuillermodelToro
               {
@@ -100,11 +100,11 @@
                 bio : 'Guillermo del Toro Gómez is a Mexican filmmaker, author, actor, and former special effects makeup artist. He is best known for the Academy Award-winning fantasy films Pan\'s Labyrinth (2006) and The Shape of Water (2017), winning the Oscars for Best Director and Best Picture for the latter.',
               }
           </td>
-          <td>Success : 200 / Error : 400</td>
+          <td>Success : 200 / Error : 404/500</td>
         </tr>
         <tr>
           <td>Show information about a genre</td>
-          <td>GET req =[/movies]/[:genre_name]</td>
+          <td>GET req =/[movies]/[genres]/[:name]</td>
           <td>Description : This endpoint retrieves all data about one specific genre selected by its name, and should return a JSON object.
               Example return: based on endpoint /genres/Comedy
               {
@@ -112,12 +112,12 @@
                 description : 'A story that tells about a series of funny, or comical events, intended to make the audience laugh.',
               }
           </td>
-          <td>Success : 200 / Error : 400</td>
+          <td>Success : 200 / Error : 404/500</td>
         </tr>
         <!--- USERS -->
         <tr>
           <td>Show all Userss</td>
-          <td>GET  req=[/users]</td>
+          <td>GET  req=/[users]</td>
           <td>Description : This endpoint gets data on all registered current users, an array of users should be returned in JSON format.
               Example return: based on endpoint /users
               [
@@ -128,7 +128,7 @@
                   dob : '12/12/12',
                   password :'JohnDoe123',
                   email : 'JohnDoe123@johndoe.com',
-                  favourite_movies : [...]
+                  FavouriteMovies: [...]
                 },
                 {
                   id : '888833242',
@@ -137,17 +137,17 @@
                   dob : '12/12/12',
                   password :'JaneDoe123',
                   email : 'JaneDoe123@janedoe.com',
-                  favourite_movies : [...]
+                  FavouriteMovies: [...]
                 },
               ]
            </td>
-          <td>Success : 200 / Error : 400 </td>
+          <td>Success : 200 / Error : 500 </td>
         </tr>
         <tr>
           <td>Get a user</td>
-          <td>GET req=[/users]/[:id]</td>
-          <td>Description : This endpoint retrieves all information about a user as selected by their unique identification number (id) and returns this in a JSON object format.
-              Example return: based on /users/823762
+          <td>GET req=/[users]/[:username]</td>
+          <td>Description : This endpoint retrieves all information about a user as selected by their unique username and returns this in a JSON object format. A similar query can be made using a user's ID /[users]/[:id].
+              Example return: based on /users/JohnDoe123
               {
                 id : '823762',
                 username : 'JohnDoe123',
@@ -155,23 +155,22 @@
                 dob : '12/12/12',
                 password :'JohnDoe123',
                 email : 'JohnDoe123@johndoe.com',
-                favourite_movies : [...]
+                FavouriteMovies: [...]
               }
           </td>
-          <td>Success : 200 / Error : 400</td>
+          <td>Success : 200 / Error : 404/500</td>
         </tr>
         <tr>
           <td>Add a user</td>
-          <td>POST req=[/users]</td>
-          <td>Description : This endpoint posts a set of information to create a user. Upon user creation the module UUID assigns each new user a unique identification number which is assigned to a user's "id". A POST request must follow the below JSON format, and MUST include a username, name, password and email address for a user.
+          <td>POST req=/[users]</td>
+          <td>Description : This endpoint posts a set of information to create a user. Upon user creation the module UUID assigns each new user a unique identification number which is assigned to a user's "id". A POST request must follow the below JSON format, and MUST include a username, password, email and DOB address for a user.
               Example post request: based on /users
               {
                 username : 'JohnDoe123',
-                name: 'John Doe',
                 dob : '12/12/12',
                 password :'JohnDoe123',
                 email : 'JohnDoe123@johndoe.com',
-                favourite_movies : [...]
+                FavouriteMovies: [...]
               }
               returns :
               {
@@ -181,26 +180,26 @@
                 dob : '12/12/12',
                 password :'JohnDoe123',
                 email : 'JohnDoe123@johndoe.com',
-                favourite_movies : [...]
+                FavouriteMovies: [...]
               }
           </td>
-          <td>Success : 201 / Error : 404</td>
+          <td>Success : 201 / Error : 500</td>
         </tr>
         <tr>
           <td>Delete a user</td>
-          <td>DELETE req=[/users]/[:id]</td>
-          <td>Description : This endpoint deletes all information about a user as selected by their unique identification number (id) and returns a text response confirming that the user has been deleted.
-              Example delete request: based on /users/823762
-              Delete {"id": '823762'}
+          <td>DELETE req=/[users]/[:username]</td>
+          <td>Description : This endpoint deletes all information about a user as selected by their username and returns a text response confirming that the user has been deleted.
+              Example delete request: based on /users/JohnDoe123
+              Delete {username : JohnDoe123}
 
-              return: "User: 823762 was deleted."
+              return: "User: JohnDoe123 was deleted."
           </td>
-          <td>Success : 201 / Error : 404</td>
+          <td>Success : 204 / Error : 404/500</td>
         </tr>
         <tr>
           <td>Update an existing user</td>
-          <td>PUT req=[/users]/[:id]</td>
-          <td>Description : This endpoint selects an existing user via their unique identification number "id", it then allows users to change fields via a JSON object (see below). Users can update a number of fields at once, and must follow the same keys as provided upon registration (e.g. username). The only field that CANNOT be changed is their "id" number as this is used to prevent multiple user conflicts.
+          <td>PUT req=/[users]/[:username]</td>
+          <td>Description : This endpoint selects an existing user via their username, it then allows users to change fields via a JSON object (see below). Users can update a number of fields at once, and must follow the same keys as provided upon registration (e.g. username). The only field that CANNOT be changed is their "id" number as this is used to prevent multiple user conflicts.
 
               User 823762's information for reference
               {
@@ -210,7 +209,7 @@
                 dob : '12/12/12',
                 password :'JohnDoe123',
                 email : 'JohnDoe123@johndoe.com',
-                favourite_movies : [...]
+                FavouriteMovies: : [...]
               }
 
               Example put request: based on /users/823762
@@ -226,29 +225,29 @@
                 dob : '12/12/12',
                 password :'JohnDoe123',
               * email : 'janedoe@janedoe.com',
-                favourite_movies : [...]
+                FavouriteMovies: [...]
               }
 
           </td>
-          <td>Success : 201 / Error : 404</td>
+          <td>Success : 201 / Error : 404/500</td>
         </tr>
         <tr>
           <td>Add a movie to favourits</td>
-          <td>POST req =[/users]/[:id][/favourite_movies]/[:movie_title]</td>
-          <td>Description : This endpoint first selects a user from the database using their unique identification number, this then allows users to add [post] new movies selected by movie_title (also able to select by movie_id) to their favourites list stored under their user id. They can do so by searching movies via their title (in text format). Users are then expected to be returned a text response containing the movie information if successfully updated. Users can then check their list to see the corresponding JSON object added to their favourites.
+          <td>POST req =/[users]/[:username]/[Movies]/[:movie_title]</td>
+          <td>Description : This endpoint first selects a user from the database using their unique identification number, this then allows users to add [post] new movies selected by movie_title (also able to select by movie_id) to their favourites list stored under their user id. They can do so by searching movies via their title (in text format). Users are then expected to be returned a text response containing the movie information if successfully updated. Users can then check their list to see the corresponding movie id (and corresponding information can be acquired through this) added to their favourites.
               For example user/823762/favourite_movies POSTs a request to add "The Beach" post(user/823762/favourite_movies/The%20Beach)
               This should return a text response stating that "This movie The Beach has been added to your list of favourites!!"
           </td>
-        <td>Success : 201 / Error : 404</td>
+        <td>Success : 201 / Error : 404/500</td>
       </tr>
       <tr>
         <td>Delete a movie from favourits</td>
-        <td>POST req =[/users]/[:id][/favourite_movies]/[:movie_id]</td>
+        <td>POST req =/[users]/[:username]/[Movies]/[:movie_title]</td>
         <td>Description : This endpoint first selects a user from the database using their unique identification number, and finds their corresponding "favourites" list. At this point users can send requests to [delete] movies from their list. They can do so by searching movies via their title (in text format) and sending out a delete request. Users are then expected to be returned a text response containing a successful deletion message (see below). Users can then check their favourites list to see the corresponding movie object has been deleted.
             For example user/823762/favourite_movies/ requests to DELETE "The Beach" delete(user/823762/favourite_movies/The%20Beach)
             This should return a text response stating that "This movie The Beach has been deleted."
         </td>
-        <td>Success : 201 / Error : 404</td>
+        <td>Success : 204 / Error : 404/500</td>
       </tr>
       </tbody>
     </table>
