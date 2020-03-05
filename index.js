@@ -4,6 +4,7 @@ morgan = require('morgan');
 bodyParser = require('body-parser');
 app.use(bodyParser.json());
 uuid = require('uuid');
+
 const mongoose = require('mongoose');
 const Models = require('./models.js');
 
@@ -12,6 +13,9 @@ const Users = Models.User;
 
 mongoose.connect('mongodb://localhost:27017/myFlixDb', { useNewUrlParser: true, useUnifiedTopology: true });
 
+var auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
 //morgan middleware tracks when api was accessed and what was requested etc.
 app.use(morgan('common'));
 
@@ -22,19 +26,18 @@ app.get('/', function (req, res, next) {
 });
 
 //MOVIES --- gets all movies
-app.get('/movies', function(req, res) {
+app.get("/movies", passport.authenticate('jwt', { session: false }), function(req, res) {
   Movies.find()
-  .then(function(movies) {
-    res.status(200).json(movies)
-  })
-  .catch(function(err) {
-    console.error(err);
-    res.status(500).send("Error: " + err);
-  });
+    .then(function(movies) {
+      res.status(200).json(movies);
+    }).catch(function(error) {
+      console.error(error);
+      res.status(500).send("Error: " + error);
+    });
 });
 
 //gets a specific movie's information by searching its title name
-app.get('/movies/:Title', function(req, res) {
+app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), function(req, res) {
   Movies.findOne({ Title : req.params.Title })
   .then(function(movie) {
     if (!movie) {
@@ -50,7 +53,7 @@ app.get('/movies/:Title', function(req, res) {
 });
 //gets a movie genre descripton by searching a genre name
 //https://docs.mongodb.com/manual/tutorial/query-embedded-documents/
-app.get('/movies/genres/:Name', function(req, res) {
+app.get('/movies/genres/:Name', passport.authenticate('jwt', { session: false }), function(req, res) {
   Movies.findOne({'Genre.Name': req.params.Name})
   .then(function(genre){
     if (!genre) {
@@ -66,7 +69,7 @@ app.get('/movies/genres/:Name', function(req, res) {
 });
 
 //gets basic info about a director upon searching their name
-app.get('/movies/directors/:Name', function(req, res) {
+app.get('/movies/directors/:Name', passport.authenticate('jwt', { session: false }), function(req, res) {
   Movies.findOne({'Director.Name': req.params.Name})
   .then(function(director){
     if (!director) {
@@ -82,7 +85,7 @@ app.get('/movies/directors/:Name', function(req, res) {
 });
 
 //USERS --- get all users
-app.get('/users', function(req, res) {
+app.get('/users', passport.authenticate('jwt', { session: false }), function(req, res) {
   Users.find()
   .then(function(users) {
     res.status(200).json(users)
@@ -94,7 +97,7 @@ app.get('/users', function(req, res) {
 });
 
 //gets a user by username
-app.get('/users/:Username', function(req, res) {
+app.get('/users/:Username', passport.authenticate('jwt', { session: false }), function(req, res) {
   Users.findOne({ Username : req.params.Username })
   .then(function(user) {
     if (!user) {
@@ -135,8 +138,26 @@ app.post('/users', function(req, res) {
   });
 });
 
+//authenticate new user
+app.post('/login', function(req, res) {
+  Users.findOne({ Username : req.body.Username })
+  .then(function(user) {
+    if (!user) {
+    return res.status(404).send(req.body.Username + "not found!");
+  } else (user) =>
+      Username === req.body.Username,
+      Password === req.body.Password
+    })
+    .then(function(user) {res.status(201).json(user) })
+    .catch(function(error) {
+      console.error(error);
+      res.status(500).send("Error: " + error);
+    })
+  });
+
+
 //allows user to update their information
-app.put('/users/:Username', function(req, res) {
+app.put('/users/:Username', passport.authenticate('jwt', { session: false }), function(req, res) {
   Users.findOneAndUpdate({ Username : req.params.Username }, { $set :
   {
     Username : req.body.Username,
@@ -156,13 +177,13 @@ app.put('/users/:Username', function(req, res) {
 });
 
 //delete existing user (deregistration)
-app.delete('/users/:Username', function(req, res) {
+app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), function(req, res) {
   Users.findOneAndRemove({ Username: req.params.Username })
   .then(function(user) {
     if (!user) {
       res.status(404).send(req.params.Username + " was not found");
     } else {
-      res.status(204).send(req.params.Username + " was deleted.");
+      res.status(200).send(req.params.Username+ " was deleted.");
     }
   })
   .catch(function(err) {
@@ -172,7 +193,7 @@ app.delete('/users/:Username', function(req, res) {
 });
 
 //FAVOURITES --- adds movies to favourites, prevents duplicates of the same movie being added to the favourites.
-app.post('/users/:Username/Movies/:MovieID', function(req, res) {
+app.post('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', { session: false }), function(req, res) {
   Users.findOneAndUpdate({ Username : req.params.Username }, {
     $addToSet : { FavouriteMovies : req.params.MovieID }
   },
@@ -189,7 +210,7 @@ app.post('/users/:Username/Movies/:MovieID', function(req, res) {
 
 //deletes a movie from user's favourites list
 //https://stackoverflow.com/questions/35397513/mongoose-update-push-delete-in-array
-app.delete('/users/:Username/Movies/:MovieID', function(req, res) {
+app.delete('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', { session: false }), function(req, res) {
   Users.findOneAndUpdate({ Username : req.params.Username }, {
     $pull : { FavouriteMovies : req.params.MovieID }
   },
@@ -199,7 +220,7 @@ app.delete('/users/:Username/Movies/:MovieID', function(req, res) {
       console.error(err);
       res.status(500).send("Error: " + err);
     } else {
-      res.status(204).json(updatedUser)
+    return res.status(200).json(updatedUser)
     }
   })
 });
