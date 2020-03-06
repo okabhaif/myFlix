@@ -2,22 +2,33 @@ const express = require('express');
 const app = express();
 morgan = require('morgan');
 bodyParser = require('body-parser');
-app.use(bodyParser.json());
 uuid = require('uuid');
-
 const mongoose = require('mongoose');
 const Models = require('./models.js');
-
 const Movies = Models.Movie;
 const Users = Models.User;
+const passport = require('passport');
+  require('./passport'); //local passport file
+const cors = require('cors');
+const { check, validationResult } = require('express-validator');
 
 mongoose.connect('mongodb://localhost:27017/myFlixDb', { useNewUrlParser: true, useUnifiedTopology: true });
-
+var allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 var auth = require('./auth')(app);
-const passport = require('passport');
-require('./passport');
-//morgan middleware tracks when api was accessed and what was requested etc.
+
+//middleware.
+app.use(bodyParser.json());
 app.use(morgan('common'));
+app.use(cors({
+  origin: function(origin, callback){
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
+      var message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
+      return callback(new Error(message ), false);
+    }
+    return callback(null, true);
+  }
+}));
 
 //introductory message on opening API with no url endpoint specified
 app.get('/', function (req, res, next) {
@@ -113,40 +124,52 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), fu
 });
 
 //add new user - required fields = username, password, email and Birthday
-app.post('/users', function(req, res) {
-  Users.findOne({ Username : req.body.Username })
-  .then(function(user) {
-    if (user) {
-      return res.status(400).send(req.body.Username + "already exists");
-    } else {
-      Users
-      .create({
-        Username: req.body.Username,
-        Password: req.body.Password,
-        Email: req.body.Email,
-        DOB: req.body.DOB
-      })
-      .then(function(user) {res.status(201).json(user) })
-      .catch(function(error) {
-        console.error(error);
-        res.status(500).send("Error: " + error);
-      })
-    }
-  }).catch(function(error) {
-    console.error(error);
-    res.status(500).send("Error: " + error);
-  });
+app.post('/users',
+  [check('Username', 'Username is required').isLength({min: 8}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid').isEmail()],
+  function(req, res) {
+    // check the validation object for errors
+     var errors = validationResult(req);
+     if (!errors.isEmpty()) {
+       return res.status(422).json({ errors: errors.array() });
+     }
+    var hashedPassword = Users.hashPassword(req.body.Password);
+    Users.findOne({ Username : req.body.Username })
+    .then(function(user) {
+      if (user) {
+        return res.status(400).send(req.body.Username + "already exists");
+      } else {
+        Users
+        .create({
+          Username: req.body.Username,
+          Password: hashedPassword,
+          Email: req.body.Email,
+          DOB: req.body.DOB
+        })
+        .then(function(user) {res.status(201).json(user) })
+        .catch(function(error) {
+          console.error(error);
+          res.status(500).send("Error: " + error);
+        })
+      }
+    }).catch(function(error) {
+      console.error(error);
+      res.status(500).send("Error: " + error);
+    });
 });
 
 //authenticate new user
 app.post('/login', function(req, res) {
+  var hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOne({ Username : req.body.Username })
   .then(function(user) {
     if (!user) {
     return res.status(404).send(req.body.Username + "not found!");
   } else (user) =>
       Username === req.body.Username,
-      Password === req.body.Password
+      Password === hashedPassword
     })
     .then(function(user) {res.status(201).json(user) })
     .catch(function(error) {
@@ -157,23 +180,34 @@ app.post('/login', function(req, res) {
 
 
 //allows user to update their information
-app.put('/users/:Username', passport.authenticate('jwt', { session: false }), function(req, res) {
-  Users.findOneAndUpdate({ Username : req.params.Username }, { $set :
-  {
-    Username : req.body.Username,
-    Password : req.body.Password,
-    Email : req.body.Email,
-    DOB : req.body.DOB
-  }},
-  { new : true }, // This line makes sure that the updated document is returned
-  function(err, updatedUser) {
-    if(err) {
-      console.error(err);
-      res.status(500).send("Error: " +err);
-    } else {
-      res.status(201).json(updatedUser)
-    }
-  })
+app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
+[check('Username', 'Username is required').isLength({min: 5}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid').isEmail()],
+   function(req, res) {
+     // check the validation object for errors
+     var errors = validationResult(req);
+     if (!errors.isEmpty()) {
+       return res.status(422).json({ errors: errors.array() });
+     }
+    var hashedPassword = Users.hashPassword(req.body.Password);
+    Users.findOneAndUpdate({ Username : req.params.Username }, { $set :
+    {
+      Username : req.body.Username,
+      Password : hashedPassword,
+      Email : req.body.Email,
+      DOB : req.body.DOB
+    }},
+    { new : true }, // This line makes sure that the updated document is returned
+    function(err, updatedUser) {
+      if(err) {
+        console.error(err);
+        res.status(500).send("Error: " +err);
+      } else {
+        res.status(201).json(updatedUser)
+      }
+    })
 });
 
 //delete existing user (deregistration)

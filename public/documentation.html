@@ -183,6 +183,32 @@
                 FavouriteMovies: [...]
               }
           </td>
+          <td>Success : 201 / Error : 422- incorrect format of data entered, 400 - user exists, 500 - error</td>
+        </tr>
+
+        <tr>
+          <td>Validate a user</td>
+          <td>POST req=/[login]</td>
+          <td>Description : This endpoint verifies a users login credentials, and creates a unique token so they can access and interact with the api safely.
+              Example post request: based on /login
+              {
+                username : 'JohnDoe123',
+                password :'JohnDoe123',
+              }
+              returns :
+              {
+                {
+                  id : '823762', <!---as assigned by UUID -->
+                  username : 'JohnDoe123',
+                  name: 'John Doe',
+                  dob : '12/12/12',
+                  password :'JohnDoe123',
+                  email : 'JohnDoe123@johndoe.com',
+                  FavouriteMovies: [...]
+                },
+              token : '873406458129474075895'
+            }
+          </td>
           <td>Success : 201 / Error : 500</td>
         </tr>
         <tr>
@@ -194,7 +220,7 @@
 
               return: "User: JohnDoe123 was deleted."
           </td>
-          <td>Success : 204 / Error : 404/500</td>
+          <td>Success : 200 / Error : 404/500</td>
         </tr>
         <tr>
           <td>Update an existing user</td>
@@ -229,7 +255,7 @@
               }
 
           </td>
-          <td>Success : 201 / Error : 404/500</td>
+          <td>Success : 201 / Error : 422 - validation error, 500 - error</td>
         </tr>
         <tr>
           <td>Add a movie to favourits</td>
@@ -247,7 +273,7 @@
             For example user/823762/favourite_movies/ requests to DELETE "The Beach" delete(user/823762/favourite_movies/The%20Beach)
             This should return a text response stating that "This movie The Beach has been deleted."
         </td>
-        <td>Success : 204 / Error : 404/500</td>
+        <td>Success : 200 / Error : 404/500</td>
       </tr>
       </tbody>
     </table>

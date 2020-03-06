@@ -9,11 +9,13 @@ var movieSchema = mongoose.Schema ({
   },
   Director : {
     Name : String,
-    Bio : String
+    Bio : String,
+    DOB: Date
   },
   ImagePath : String,
   Featured : Boolean
 });
+const bcrypt = require('bcryptjs');
 
 var userSchema = mongoose.Schema ({
   Username : {type: String, required: true},
@@ -22,6 +24,13 @@ var userSchema = mongoose.Schema ({
   DOB : Date,
   FavouriteMovies : [{type: mongoose.Schema.Types.ObjectId, ref:'Movie'}]
 });
+userSchema.statics.hashPassword = function(password) {
+  return bcrypt.hashSync(password, 10);
+};
+userSchema.methods.validatePassword = function(password) {
+  return bcrypt.compareSync(password, this.Password);
+};
+
 
 var Movie = mongoose.model('Movie', movieSchema);
 var User = mongoose.model('User', userSchema);
