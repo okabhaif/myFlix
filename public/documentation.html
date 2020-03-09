@@ -14,7 +14,7 @@
     <h1>
       Background
     </h1>
-    <p>
+    <p class="bg_information">
       This project aims to build the server­side component of a “movies” web application. The web application will
       provide users with access to information about different movies, directors, and genres. Users
       will be able to sign up, update their personal information, and create a list of their favorite
@@ -27,19 +27,19 @@
     <table>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Method + data param</th>
-          <th>Description</th>
-          <th>Example error codes</th>
+          <th class="path_name">Name</th>
+          <th class="method">Method + data param</th>
+          <th class="description">Description</th>
+          <th class="status_codes">Status codes</th>
 
         </tr>
       </thead>
       <tbody>
 
         <tr>
-          <td>Show All Movies</td>
-          <td>GET  req=/[movies]</td>
-          <td>This endpoint gets data on all movies listed in the API, an array of movies should be returned in JSON format.<br>
+          <td class="path_name">Show All Movies</td>
+          <td class="method">GET  req=/[movies]</td>
+          <td class="description">This endpoint gets data on all movies listed in the API, an array of movies should be returned in JSON format.<br>
             <pre class="tab">
               Example return: based on endpoint /movies<br>
               <br>
@@ -64,22 +64,25 @@
                                 'Name' : 'Adventure';
                                 'Description': 'information about genre....'
                               },
-                    director: { 'Name' : 'James McTeigue'
-                                 'Bio' : '...information about director..',
-                                 'DOB' : '1967-12-29'
+                    director: {
+                                'Name' : 'James McTeigue'
+                                'Bio' : '...information about director..',
+                                'DOB' : '1967-12-29'
                                },
                     image : 'imageURL'
                   },
                 ];
+              </pre>
           </td>
-          <td>Success : 200<br>
+          <td class="status_codes">
+              Success : 200<br>
               Error : 500
           </td>
         </tr>
         <tr>
-          <td>Show information about a movie</td>
-          <td>GET req=/[movies]/[:title]</td>
-          <td>This endpoint retrieves all data about one specific movie selected by its title, a JSON object specific to that movie should be returned. Users can also find a specific movie by movie_id in the same way (endpoint /movies/236745).
+          <td class="path_name">Show information about a movie</td>
+          <td class="method">GET req=/[movies]/[:title]</td>
+          <td class="description">This endpoint retrieves all data about one specific movie selected by its title, a JSON object specific to that movie should be returned. Users can also find a specific movie by movie_id in the same way (endpoint /movies/236745).
               <br>Example return: based on endpoint /movies/VforVendetta
               <pre class="tab">
               {
@@ -97,15 +100,17 @@
                            },
                 image : 'imageURL'
               },
+            </pre>
             </td>
-          <td>Success : 201 <br>
+          <td class="status_codes">
+              Success : 201 <br>
               Error : 404/500
           </td>
         </tr>
         <tr>
-          <td>Show information about a director</td>
-          <td>GET req=/[movies]/[directors]/[:Name]</td>
-          <td>This endpoint retrieves all data about one specific director selected by their name. A JSON object should be returned with the Director's information.
+          <td class="path_name">Show information about a director</td>
+          <td class="method">GET req=/[movies]/[directors]/[:Name]</td>
+          <td class="description">This endpoint retrieves all data about one specific director selected by their name. A JSON object should be returned with the Director's information.
               Example return: based on endpoint /movies/GuillermodelToro
               <pre class="tab">
               {
@@ -113,31 +118,35 @@
                 dob : '9 October 1964',
                 bio : '...information about director..',
               }
+            </pre>
           </td>
-          <td>Success : 200 <br>
+          <td class="status_codes">
+              Success : 200 <br>
               Error : 404/500
           </td>
         </tr>
         <tr>
-          <td>Show information about a genre</td>
-          <td>GET req =/[movies]/[genres]/[:name]</td>
-          <td>This endpoint retrieves all data about one specific genre selected by its name, and should return a JSON object.
+          <td class="path_name">Show information about a genre</td>
+          <td class="method">GET req =/[movies]/[genres]/[:name]</td>
+          <td class="description">This endpoint retrieves all data about one specific genre selected by its name, and should return a JSON object.
               Example return: based on endpoint /genres/Comedy
               <pre class="tab">
               {
                 name : 'Comedy',
-                description : '...information about genre..',
               }
+                description : '...information about genre..',
+              </pre>
           </td>
-          <td>Success : 200 <br>
+          <td class="status_codes">
+              Success : 200 <br>
               Error : 404/500
           </td>
         </tr>
         <!--- USERS -->
         <tr>
-          <td>Show all Users</td>
-          <td>GET  req=/[users]</td>
-          <td>This endpoint gets data on all registered current users, an array of users should be returned in JSON format.
+          <td class="path_name">Show all Users</td>
+          <td class="method">GET  req=/[users]</td>
+          <td class="description">This endpoint gets data on all registered current users, an array of users should be returned in JSON format.
               Example return: based on endpoint /users
               <pre class="tab">
               [
@@ -160,15 +169,17 @@
                   FavouriteMovies: [...]
                 },
               ]
+            </pre>
            </td>
-          <td>Success : 200 <br>
+          <td class="status_codes">
+              Success : 200 <br>
               Error : 500
           </td>
         </tr>
         <tr>
-          <td>Get a user</td>
-          <td>GET req=/[users]/[:username]</td>
-          <td>This endpoint retrieves all information about a user as selected by their unique username and returns this in a JSON object format. A similar query can be made using a user's ID /[users]/[:id].
+          <td class="path_name">Get a user</td>
+          <td class="method">GET req=/[users]/[:username]</td>
+          <td class="description">This endpoint retrieves all information about a user as selected by their unique username and returns this in a JSON object format. A similar query can be made using a user's ID /[users]/[:id].
               Example return: based on /users/JohnDoe123
               <pre class="tab">
               {
@@ -180,15 +191,17 @@
                 email : 'JohnDoe123@johndoe.com',
                 FavouriteMovies: [...]
               }
+            </pre>
           </td>
-          <td>Success : 200<br>
+          <td class="status_codes">
+              Success : 200<br>
               Error : 404/500
           </td>
         </tr>
         <tr>
-          <td>Add a user</td>
-          <td>POST req=/[users]</td>
-          <td>This endpoint posts a set of information to create a user. Upon user creation the module UUID assigns each new user a unique identification number which is assigned to a user's "id". A POST request must follow the below JSON format, and MUST include a username, password, email and DOB address for a user.
+          <td class="path_name">Add a user</td>
+          <td class="method">POST req=/[users]</td>
+          <td class="description">This endpoint posts a set of information to create a user. Upon user creation the module UUID assigns each new user a unique identification number which is assigned to a user's "id". A POST request must follow the below JSON format, and MUST include a username, password, email and DOB address for a user.
               Example post request: based on /users
               <pre class="tab">
               {
@@ -208,17 +221,19 @@
                 email : 'JohnDoe123@johndoe.com',
                 FavouriteMovies: [...]
               }
+            </pre>
           </td>
-          <td>Success : 201 <br>
+          <td class="status_codes">
+              Success : 201 <br>
               Auth Error: 422<br>
               Error : 400/500
           </td>
         </tr>
 
         <tr>
-          <td>Validate a user</td>
-          <td>POST req=/[login]</td>
-          <td>This endpoint verifies a users login credentials, and creates a unique token so they can access and interact with the api safely.
+          <td class="path_name">Validate a user</td>
+          <td class="method">POST req=/[login]</td>
+          <td class="description">This endpoint verifies a users login credentials, and creates a unique token so they can access and interact with the api safely.
               Example post request: based on /login
               <pre class="tab">
               {
@@ -238,29 +253,33 @@
                 },
               token : '873406458129474075895'
             }
+          </pre>
           </td>
-          <td>Success : 201<br>
+          <td class="status_codes">
+              Success : 201<br>
               Error : 500
           </td>
         </tr>
         <tr>
-          <td>Delete a user</td>
-          <td>DELETE req=/[users]/[:username]</td>
-          <td>This endpoint deletes all information about a user as selected by their username and returns a text response confirming that the user has been deleted.
+          <td class="path_name">Delete a user</td>
+          <td class="method">DELETE req=/[users]/[:username]</td>
+          <td class="description">This endpoint delete class="path_name"s all information about a user as selected by their username and returns a text response confirming that the user has been deleted.
               Example delete request: based on /users/JohnDoe123
               <pre class="tab">
               Delete {username : JohnDoe123}
 
               return: "User: JohnDoe123 was deleted."
+            </pre>
           </td>
-          <td>Success : 200<br>
+          <td class="status_codes">
+              Success : 200<br>
               Error : 404/500
           </td>
         </tr>
         <tr>
-          <td>Update an existing user</td>
-          <td>PUT req=/[users]/[:username]</td>
-          <td>This endpoint selects an existing user via their username, it then allows users to change fields via a JSON object (see below). Users can update a number of fields at once, and must follow the same keys as provided upon registration (e.g. username). The only field that CANNOT be changed is their "id" number as this is used to prevent multiple user conflicts.
+          <td class="path_name">Update an existing user</td>
+          <td class="method">PUT req=/[users]/[:username]</td>
+          <td class="description">This endpoint selects an existing user via their username, it then allows users to change fields via a JSON object (see below). Users can update a number of fields at once, and must follow the same keys as provided upon registration (e.g. username). The only field that CANNOT be changed is their "id" number as this is used to prevent multiple user conflicts.
               <pre class="tab">
               User 823762's information for reference
               {
@@ -288,36 +307,41 @@
               * email : 'janedoe@janedoe.com',
                 FavouriteMovies: [...]
               }
-
+            </pre>
           </td>
-          <td>Success : 201 <br>
+          <td class="status_codes">
+              Success : 201 <br>
               Auth Error : 422 <br>
               Error : 500 </td>
         </tr>
         <tr>
-          <td>Add a movie to favourites</td>
-          <td>POST req =/[users]/[:username]/[Movies]/[:movie_id]</td>
-          <td>This endpoint selects a user from the database using their unique identification number, verified users can then add [post] new movies to their favourites list by searching a movie title/id.
+          <td class="path_name">Add a movie to favourites</td>
+          <td class="method">POST req =/[users]/[:username]/[Movies]/[:movie_id]</td>
+          <td class="description">This endpoint selects a user from the database using their unique identification number, verified users can then add [post] new movies to their favourites list by searching a movie title/id.
               For example user/823762/favourite_movies POSTs a request to add "The Beach" post(user/823762/favourite_movies/The%20Beach)
               <pre class="tab">
               This should return a text response:
               "This movie: "The Beach" has been added to your list of favourites!!"
+            </pre>
           </td>
-        <td>Success : 201 <br>
+        <td class="status_codes">
+            Success : 201 <br>
             Error : 404/500
         </td>
       </tr>
       <tr>
-        <td>Delete a movie from favourites</td>
-        <td>POST req =/[users]/[:username]/[Movies]/[:movie_title]</td>
-        <td>Description : This endpoint selects a user from the database using their unique identification number where their "favourites" list is located. At this point verified users can send requests to [delete] movies from their list. They can do so by searching movies via their title/id (in text format) and sending out a delete request.
+        <td class="path_name">Delete a movie from favourites</td>
+        <td class="method">POST req =/[users]/[:username]/[Movies]/[:movie_title]</td>
+        <td class="description">This endpoint selects a user from the database using their unique identification number where their "favourites" list is located. At this point verified users can send requests to [delete] movies from their list. They can do so by searching movies via their title/id (in text format) and sending out a delete request.
             Users should recieve a text prompt confirming deletion.
             For example user/823762/favourite_movies/ requests to DELETE "The Beach" delete(user/823762/favourite_movies/The%20Beach)
             <pre class="tab">
             This should return a text response:
             "This movie: "The Beach" has been deleted."
+          </pre>
         </td>
-        <td>Success : 200<br>
+        <td class="status_codes">
+            Success : 200<br>
             Error : 404/500
         </td>
       </tr>
