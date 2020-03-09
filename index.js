@@ -162,6 +162,25 @@ app.post('/users',
     });
 });
 
+//authenticate new user
+app.post('/login', function(req, res) {
+  var hashedPassword = Users.hashPassword(req.body.Password);
+  Users.findOne({ Username : req.body.Username })
+  .then(function(user) {
+    if (!user) {
+    return res.status(404).send(req.body.Username + "not found!");
+  } else (user) =>
+      Username === req.body.Username,
+      Password === hashedPassword
+    })
+    .then(function(user) {res.status(201).json(user) })
+    .catch(function(error) {
+      console.error(error);
+      res.status(500).send("Error: " + error);
+    })
+  });
+
+
 //allows user to update their information
 app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
 [check('Username', 'Username is required').isLength({min: 5}),
