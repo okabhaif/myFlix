@@ -14,9 +14,7 @@ const cors = require('cors');
 const { check, validationResult } = require('express-validator');
 
 //mongoose.connect('mongodb://localhost:27017/myFlixDb', { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connect('mongodb+srv://okabhaif_admin:Potatoes101%23@okabhaif-be04p.mongodb.net/myFlixDb?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
-
-//mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 var allowedOrigins = ['http://localhost:8080', 'https://myflix-project.herokuapp.com/'];
 
 //middleware.
