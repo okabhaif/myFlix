@@ -15,7 +15,7 @@ const { check, validationResult } = require('express-validator');
 
 //mongoose.connect('mongodb://localhost:27017/myFlixDb', { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-var allowedOrigins = ['http://localhost:8080', 'https://myflix-project.herokuapp.com/'];
+var allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'https://myflix-project.herokuapp.com/'];
 
 //middleware.
 app.use(bodyParser.json());
@@ -39,7 +39,7 @@ app.get('/', function (req, res, next) {
 });
 
 //MOVIES --- gets all movies
-app.get("/movies", passport.authenticate('jwt', { session: false }), function (req, res) {
+app.get("/movies", function (req, res) {
   Movies.find()
     .then(function (movies) {
       res.status(200).json(movies);
