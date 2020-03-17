@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'primereact/button';
+import Button from 'react-bootstrap/Button';
 
 export class MovieView extends React.Component {
   constructor() {
@@ -36,7 +36,7 @@ export class MovieView extends React.Component {
         </div>
 
         <div>
-          <Button label="Home" className="p-button-secondary p-button-raised" onClick={this.props.resetMovie} />
+          <Button variant="dark" className="nav-to-home" type="button" size="sm" onClick={this.props.resetMovie} >Home</Button>
         </div>
       </div>
 
