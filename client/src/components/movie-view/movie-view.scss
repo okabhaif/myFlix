@@ -1,0 +1,11 @@
+$base-font : 'Oswald', sans-serif;
+
+.movie-view {
+  font-family: $base-font;
+}
+
+.movie-poster{
+  max-height: 560px;
+  overflow: hidden;
+  max-width: 80%;
+}

@@ -1,15 +1,22 @@
 import React from 'react';
 import axios from 'axios';
+import { LoginView } from '../login-view/login-view';
+import { RegistrationView } from '../registration-view/registration-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
+import { MovieList } from '../movie-list/movie-list';
+
 
 export class MainView extends React.Component {
 
   constructor() {
     super();
+
     this.state = {
       movies: null,
-      selectedMovie: null
+      selectedMovie: null,
+      user: null,
+      registrationView: false
     };
   }
 
@@ -27,7 +34,7 @@ export class MainView extends React.Component {
       });
   }
 
-  onMovieClick(movie) {
+  selectMovie(movie) {
     this.setState({
       selectedMovie: movie
     });
@@ -39,8 +46,36 @@ export class MainView extends React.Component {
     });
   }
 
+  onLoggedIn(user) {
+    this.setState({
+      user
+    });
+  }
+
+  showRegistrationView() {
+    this.setState({
+      registrationView: true
+    });
+  }
+
+  onRegistration() {
+    this.setState({
+
+      registrationView: false
+    });
+  }
+
+
   render() {
-    const { movies, selectedMovie } = this.state;
+    const { movies, selectedMovie, user, registrationView } = this.state;
+    console.log(movies, selectedMovie, user, registrationView)
+    if (!user) {
+      if (registrationView) {
+        return <RegistrationView onRegistration={() => this.onRegistration()} />
+      }
+      return <LoginView onLoggedIn={user => this.onLoggedIn(user)} showRegistrationView={() => this.showRegistrationView()} />;
+    }
+
 
     // Before the movies have been loaded
     if (!movies) return <div className="main-view" />;
@@ -50,9 +85,7 @@ export class MainView extends React.Component {
       <div className="main-view">
         {selectedMovie
           ? <MovieView movie={selectedMovie} resetMovie={this.resetMovie.bind(this)} />
-          : movies.map(movie => (
-            <MovieCard key={movie._id} movie={movie} onClick={movie => this.onMovieClick(movie)} />
-          ))
+          : <MovieList movies={movies} selectMovie={this.selectMovie.bind(this)} />
         }
       </div>
     );

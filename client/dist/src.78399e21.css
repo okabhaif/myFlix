@@ -1,5 +1,39 @@
-.my-flix {
-  color: steelblue;
+.text-card-styling {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 12;
+  top: 480px;
+  height: 100px;
+  background-image: linear-gradient(top, rgba(255, 255, 255, 0) 0%, white 100%);
+  background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 0) 0%, white 100%);
+  background-image: -ms-linear-gradient(top, rgba(255, 255, 255, 0) 0%, white 100%);
+  background-image: -o-linear-gradient(top, rgba(255, 255, 255, 0) 0%, white 100%);
+  background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, white 100%);
+}
+
+.card-text {
+  height: 100px;
+  overflow-y: hidden;
+}
+
+.fixed-movie-image {
+  height: 420px;
+  overflow: hidden;
+  width: 100%;
+}
+.movie-view {
+  font-family: "Oswald", sans-serif;
+}
+
+.movie-poster {
+  max-height: 560px;
+  overflow: hidden;
+  max-width: 80%;
+}
+body {
+  font-family: "Oswald", sans-serif;
 }
 
 /*# sourceMappingURL=/src.78399e21.css.map */

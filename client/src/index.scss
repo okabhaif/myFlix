@@ -1,5 +1,5 @@
-$color: steelblue;
+$base-font : 'Oswald', sans-serif;
 
-.my-flix {
-  color: $color;
+body {
+  font-family: $base-font;
 }
