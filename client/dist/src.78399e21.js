@@ -32430,7 +32430,7 @@ function RegistrationView(props) {
   }, _react.default.createElement(_Form.default.Label, null, "Username: "), _react.default.createElement(_Form.default.Control, {
     type: "username",
     placeholder: "Please enter 8 or more characters",
-    value: email,
+    value: username,
     onChange: function onChange(e) {
       return registerUsername(e.target.value);
     }
@@ -32441,7 +32441,7 @@ function RegistrationView(props) {
   }, _react.default.createElement(_Form.default.Label, null, "Password: "), _react.default.createElement(_Form.default.Control, {
     type: "password",
     placeholder: "Please enter 8 or more characters",
-    value: email,
+    value: password,
     onChange: function onChange(e) {
       return registerPassword(e.target.value);
     }
@@ -32461,7 +32461,7 @@ function RegistrationView(props) {
   }, _react.default.createElement(_Form.default.Label, null, "Date of birth: "), _react.default.createElement(_Form.default.Control, {
     type: "DOB",
     placeholder: "dd/mm/yyyy",
-    value: email,
+    value: DOB,
     onChange: function onChange(e) {
       return registerDOB(e.target.value);
     }
@@ -33286,7 +33286,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61794" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63617" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

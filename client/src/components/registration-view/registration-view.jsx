@@ -21,14 +21,14 @@ export function RegistrationView(props) {
       <Form className='mt-5 registration-form'>
         <Form.Group controlId="registration-username">
           <Form.Label>Username: </Form.Label>
-          <Form.Control type="username" placeholder="Please enter 8 or more characters" value={email} onChange={e => registerUsername(e.target.value)} />
+          <Form.Control type="username" placeholder="Please enter 8 or more characters" value={username} onChange={e => registerUsername(e.target.value)} />
           <Form.Text className='text-muted'>
             Please note that special characters (e.g. # -) are not valid for this field.
           </Form.Text>
         </Form.Group>
         <Form.Group controlId="registration-password">
           <Form.Label>Password: </Form.Label>
-          <Form.Control type="password" placeholder="Please enter 8 or more characters" value={email} onChange={e => registerPassword(e.target.value)} />
+          <Form.Control type="password" placeholder="Please enter 8 or more characters" value={password} onChange={e => registerPassword(e.target.value)} />
           <Form.Text className='text-muted'>
             Please note that special characters (e.g. # -) are not valid for this field.
           </Form.Text>
@@ -39,7 +39,7 @@ export function RegistrationView(props) {
         </Form.Group>
         <Form.Group controlId="registration-DOB">
           <Form.Label>Date of birth: </Form.Label>
-          <Form.Control type="DOB" placeholder="dd/mm/yyyy" value={email} onChange={e => registerDOB(e.target.value)} />
+          <Form.Control type="DOB" placeholder="dd/mm/yyyy" value={DOB} onChange={e => registerDOB(e.target.value)} />
         </Form.Group>
         <Button type="button" variant="dark" size="sm" onClick={handleRegistration}>Submit</Button>
       </Form>
