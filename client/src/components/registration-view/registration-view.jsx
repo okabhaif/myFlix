@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container'
@@ -10,15 +12,28 @@ export function RegistrationView(props) {
   const [DOB, registerDOB] = useState('');
 
   const handleRegistration = (e) => {
+
     e.preventDefault();
-    console.log(username, password, email, DOB);
-    // Send a request to the server for authentication then call props.onLoggedIn(username)
-    props.onRegistration(username);
+    axios.post('https://myflix-project.herokuapp.com/users', {
+      // Send a request to the server for authentication then call props.onLoggedIn(username)
+      Username: username,
+      Password: password,
+      Email: email,
+      DOB: DOB
+    })
+      .then(response => {
+        const data = response.data;
+        props.onRegistration(data);
+      })
+      .catch(e => {
+        console.error(e)
+      });
   };
+
 
   return (
     <Container className="mx-auto" style={{ width: "80%" }}>
-      <Form className='mt-5 registration-form'>
+      <Form className='mt-5 registration-form' onSubmit={handleRegistration}>
         <Form.Group controlId="registration-username">
           <Form.Label>Username: </Form.Label>
           <Form.Control type="username" placeholder="Please enter 8 or more characters" value={username} onChange={e => registerUsername(e.target.value)} />
@@ -39,9 +54,9 @@ export function RegistrationView(props) {
         </Form.Group>
         <Form.Group controlId="registration-DOB">
           <Form.Label>Date of birth: </Form.Label>
-          <Form.Control type="DOB" placeholder="dd/mm/yyyy" value={DOB} onChange={e => registerDOB(e.target.value)} />
+          <Form.Control type="date" placeholder="dd/mm/yyyy" value={DOB} onChange={e => registerDOB(e.target.value)} />
         </Form.Group>
-        <Button type="button" variant="dark" size="sm" onClick={handleRegistration}>Submit</Button>
+        <Button type="button" variant="dark" size="sm" type="submit">Submit</Button>
       </Form>
     </Container>
   );

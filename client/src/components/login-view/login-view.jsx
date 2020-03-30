@@ -25,13 +25,13 @@ export function LoginView(props) {
         props.onLoggedIn(data);
       })
       .catch(e => {
-        console.log('no such user')
+        console.error(e)
       });
   };
 
   return (
     <Container className="mx-auto" style={{ width: "80%" }}>
-      <Form className='mt-5 login-form'>
+      <Form className='mt-5 login-form' onSubmit={handleSubmit}>
         <Form.Group controlId="login-username">
           <Form.Label>Username: </Form.Label>
           <Form.Control type="username" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} />
@@ -40,7 +40,7 @@ export function LoginView(props) {
           <Form.Label>Password: </Form.Label>
           <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
         </Form.Group>
-        <Button className="login-button mt-3" type="button" variant="dark" size="sm" onClick={handleSubmit}>Submit</Button>
+        <Button className="login-button mt-3" type="button" variant="dark" size="sm" type="submit">Submit</Button>
         <Form.Group controlId="link-to-registration" className="register-here mt-3">
           <Form.Text>Haven't got an account yet.. </Form.Text>
           <Button className="link-to-registration-button mt-3" type="button" variant="dark" size="sm" onClick={showRegistrationView}>Register Here!!</Button>

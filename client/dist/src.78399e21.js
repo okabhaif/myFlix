@@ -32283,11 +32283,15 @@ var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
 
 var _Container = _interopRequireDefault(require("react-bootstrap/Container"));
 
+var _axios = _interopRequireDefault(require("axios"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
@@ -32312,9 +32316,17 @@ function LoginView(props) {
 
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
-    console.log(username, password); // Send a request to the server for authentication then call props.onLoggedIn(username)
+    /*send request to server for authentication */
 
-    props.onLoggedIn(username);
+    _axios.default.post('https://myflix-project.herokuapp.com/login', {
+      Username: username,
+      Password: password
+    }).then(function (response) {
+      var data = response.data;
+      props.onLoggedIn(data);
+    }).catch(function (e) {
+      console.error(e);
+    });
   };
 
   return _react.default.createElement(_Container.default, {
@@ -32323,7 +32335,8 @@ function LoginView(props) {
       width: "80%"
     }
   }, _react.default.createElement(_Form.default, {
-    className: "mt-5 login-form"
+    className: "mt-5 login-form",
+    onSubmit: handleSubmit
   }, _react.default.createElement(_Form.default.Group, {
     controlId: "login-username"
   }, _react.default.createElement(_Form.default.Label, null, "Username: "), _react.default.createElement(_Form.default.Control, {
@@ -32343,13 +32356,12 @@ function LoginView(props) {
     onChange: function onChange(e) {
       return setPassword(e.target.value);
     }
-  })), _react.default.createElement(_Button.default, {
+  })), _react.default.createElement(_Button.default, _defineProperty({
     className: "login-button mt-3",
     type: "button",
     variant: "dark",
-    size: "sm",
-    onClick: handleSubmit
-  }, "Submit"), _react.default.createElement(_Form.default.Group, {
+    size: "sm"
+  }, "type", "submit"), "Submit"), _react.default.createElement(_Form.default.Group, {
     controlId: "link-to-registration",
     className: "register-here mt-3"
   }, _react.default.createElement(_Form.default.Text, null, "Haven't got an account yet.. "), _react.default.createElement(_Button.default, {
@@ -32360,7 +32372,7 @@ function LoginView(props) {
     onClick: showRegistrationView
   }, "Register Here!!"))));
 }
-},{"react":"../node_modules/react/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js"}],"components/registration-view/registration-view.jsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","axios":"../node_modules/axios/index.js"}],"components/registration-view/registration-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32369,6 +32381,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.RegistrationView = RegistrationView;
 
 var _react = _interopRequireWildcard(require("react"));
+
+var _axios = _interopRequireDefault(require("axios"));
 
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
@@ -32381,6 +32395,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
@@ -32413,9 +32429,19 @@ function RegistrationView(props) {
 
   var handleRegistration = function handleRegistration(e) {
     e.preventDefault();
-    console.log(username, password, email, DOB); // Send a request to the server for authentication then call props.onLoggedIn(username)
 
-    props.onRegistration(username);
+    _axios.default.post('https://myflix-project.herokuapp.com/users', {
+      // Send a request to the server for authentication then call props.onLoggedIn(username)
+      Username: username,
+      Password: password,
+      Email: email,
+      DOB: DOB
+    }).then(function (response) {
+      var data = response.data;
+      props.onRegistration(data);
+    }).catch(function (e) {
+      console.error(e);
+    });
   };
 
   return _react.default.createElement(_Container.default, {
@@ -32424,7 +32450,8 @@ function RegistrationView(props) {
       width: "80%"
     }
   }, _react.default.createElement(_Form.default, {
-    className: "mt-5 registration-form"
+    className: "mt-5 registration-form",
+    onSubmit: handleRegistration
   }, _react.default.createElement(_Form.default.Group, {
     controlId: "registration-username"
   }, _react.default.createElement(_Form.default.Label, null, "Username: "), _react.default.createElement(_Form.default.Control, {
@@ -32459,20 +32486,19 @@ function RegistrationView(props) {
   })), _react.default.createElement(_Form.default.Group, {
     controlId: "registration-DOB"
   }, _react.default.createElement(_Form.default.Label, null, "Date of birth: "), _react.default.createElement(_Form.default.Control, {
-    type: "DOB",
+    type: "date",
     placeholder: "dd/mm/yyyy",
     value: DOB,
     onChange: function onChange(e) {
       return registerDOB(e.target.value);
     }
-  })), _react.default.createElement(_Button.default, {
+  })), _react.default.createElement(_Button.default, _defineProperty({
     type: "button",
     variant: "dark",
-    size: "sm",
-    onClick: handleRegistration
-  }, "Submit")));
+    size: "sm"
+  }, "type", "submit"), "Submit")));
 }
-},{"react":"../node_modules/react/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js"}],"../node_modules/react-bootstrap/esm/divWithClassName.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js"}],"../node_modules/react-bootstrap/esm/divWithClassName.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33100,10 +33126,17 @@ var MainView = /*#__PURE__*/function (_React$Component) {
 
   _createClass(MainView, [{
     key: "componentDidMount",
-    value: function componentDidMount() {
+    value: function componentDidMount() {}
+  }, {
+    key: "getMovies",
+    value: function getMovies(token) {
       var _this2 = this;
 
-      _axios.default.get('https://myflix-project.herokuapp.com/movies').then(function (response) {
+      _axios.default.get('https://myflix-project.herokuapp.com/movies', {
+        headers: {
+          Authorization: "Bearer ".concat(token)
+        }
+      }).then(function (response) {
         // Assign the result to the state
         _this2.setState({
           movies: response.data
@@ -33128,10 +33161,14 @@ var MainView = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "onLoggedIn",
-    value: function onLoggedIn(user) {
+    value: function onLoggedIn(authData) {
+      console.log(authData);
       this.setState({
-        user: user
+        user: authData.user.Username
       });
+      localStorage.setItem('token', authData.token);
+      localStorage.setItem('user', authData.user.Username);
+      this.getMovies(authData.token);
     }
   }, {
     key: "showRegistrationView",
@@ -33286,7 +33323,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63617" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53449" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
