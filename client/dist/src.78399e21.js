@@ -32496,7 +32496,13 @@ function RegistrationView(props) {
     type: "button",
     variant: "dark",
     size: "sm"
-  }, "type", "submit"), "Submit")));
+  }, "type", "submit"), "Submit"), _react.default.createElement(_Button.default, {
+    type: "button",
+    className: "nav-to-login",
+    variant: "dark",
+    size: "sm",
+    onClick: props.onRegistration
+  }, " Back")));
 }
 },{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js"}],"../node_modules/react-bootstrap/esm/divWithClassName.js":[function(require,module,exports) {
 "use strict";
@@ -33075,6 +33081,8 @@ var _react = _interopRequireDefault(require("react"));
 
 var _axios = _interopRequireDefault(require("axios"));
 
+var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
+
 var _loginView = require("../login-view/login-view");
 
 var _registrationView = require("../registration-view/registration-view");
@@ -33126,7 +33134,16 @@ var MainView = /*#__PURE__*/function (_React$Component) {
 
   _createClass(MainView, [{
     key: "componentDidMount",
-    value: function componentDidMount() {}
+    value: function componentDidMount() {
+      var accessToken = localStorage.getItem('token');
+
+      if (accessToken !== null) {
+        this.setState({
+          user: localStorage.getItem('user')
+        });
+        this.getMovies(accessToken);
+      }
+    }
   }, {
     key: "getMovies",
     value: function getMovies(token) {
@@ -33169,6 +33186,19 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       localStorage.setItem('token', authData.token);
       localStorage.setItem('user', authData.user.Username);
       this.getMovies(authData.token);
+    }
+  }, {
+    key: "onLogout",
+    value: function onLogout() {
+      console.log();
+      this.setState({
+        movies: null,
+        selectedMovie: null,
+        user: null,
+        registrationView: false
+      });
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
     }
   }, {
     key: "showRegistrationView",
@@ -33227,7 +33257,13 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       }) : _react.default.createElement(_movieList.MovieList, {
         movies: movies,
         selectMovie: this.selectMovie.bind(this)
-      }));
+      }), _react.default.createElement(_Button.default, {
+        className: "logout-button mt-3",
+        type: "button",
+        variant: "dark",
+        size: "sm",
+        onClick: this.onLogout.bind(this)
+      }, "Logout"));
     }
   }]);
 
@@ -33235,7 +33271,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
 }(_react.default.Component);
 
 exports.MainView = MainView;
-},{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","../login-view/login-view":"components/login-view/login-view.jsx","../registration-view/registration-view":"components/registration-view/registration-view.jsx","../movie-card/movie-card":"components/movie-card/movie-card.jsx","../movie-view/movie-view":"components/movie-view/movie-view.jsx","../movie-list/movie-list":"components/movie-list/movie-list.jsx"}],"index.scss":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","../login-view/login-view":"components/login-view/login-view.jsx","../registration-view/registration-view":"components/registration-view/registration-view.jsx","../movie-card/movie-card":"components/movie-card/movie-card.jsx","../movie-view/movie-view":"components/movie-view/movie-view.jsx","../movie-list/movie-list":"components/movie-list/movie-list.jsx"}],"index.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -33323,7 +33359,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53449" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59912" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

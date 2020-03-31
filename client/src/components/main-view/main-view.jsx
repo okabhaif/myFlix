@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button';
+
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { MovieCard } from '../movie-card/movie-card';
@@ -21,7 +23,15 @@ export class MainView extends React.Component {
   }
 
   // One of the "hooks" available in a React Component
-  componentDidMount() { }
+  componentDidMount() {
+    let accessToken = localStorage.getItem('token');
+    if (accessToken !== null) {
+      this.setState({
+        user: localStorage.getItem('user')
+      });
+      this.getMovies(accessToken);
+    }
+  }
 
   getMovies(token) {
     axios.get('https://myflix-project.herokuapp.com/movies', {
@@ -61,6 +71,19 @@ export class MainView extends React.Component {
     this.getMovies(authData.token);
   }
 
+  onLogout() {
+    console.log();
+    this.setState({
+      movies: null,
+      selectedMovie: null,
+      user: null,
+      registrationView: false
+    });
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+
+  }
+
   showRegistrationView() {
     this.setState({
       registrationView: true
@@ -96,6 +119,10 @@ export class MainView extends React.Component {
           ? <MovieView movie={selectedMovie} resetMovie={this.resetMovie.bind(this)} />
           : <MovieList movies={movies} selectMovie={this.selectMovie.bind(this)} />
         }
+
+        <Button className="logout-button mt-3" type="button" variant="dark" size="sm" onClick={this.onLogout.bind(this)}>Logout</Button>
+
+
       </div>
     );
   }

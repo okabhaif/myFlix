@@ -57,6 +57,8 @@ export function RegistrationView(props) {
           <Form.Control type="date" placeholder="dd/mm/yyyy" value={DOB} onChange={e => registerDOB(e.target.value)} />
         </Form.Group>
         <Button type="button" variant="dark" size="sm" type="submit">Submit</Button>
+        <Button type="button" className="nav-to-login" variant="dark" size="sm" onClick={props.onRegistration}> Back</Button>
+
       </Form>
     </Container>
   );
