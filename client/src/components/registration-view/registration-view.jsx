@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link } from "react-router-dom";
+
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -23,10 +25,12 @@ export function RegistrationView(props) {
     })
       .then(response => {
         const data = response.data;
-        props.onRegistration(data);
+        console.log(data);
+        window.open('/', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
+
       })
       .catch(e => {
-        console.error(e)
+        console.error('error registering the user')
       });
   };
 
@@ -57,7 +61,10 @@ export function RegistrationView(props) {
           <Form.Control type="date" placeholder="dd/mm/yyyy" value={DOB} onChange={e => registerDOB(e.target.value)} />
         </Form.Group>
         <Button type="button" variant="dark" size="sm" type="submit">Submit</Button>
-        <Button type="button" className="nav-to-login" variant="dark" size="sm" onClick={props.onRegistration}> Back</Button>
+        <Link to={`/`}>
+
+          <Button type="button" className="nav-to-login" variant="dark" size="sm"> Back</Button>
+        </Link>
 
       </Form>
     </Container>

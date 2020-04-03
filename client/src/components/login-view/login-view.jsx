@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link } from "react-router-dom";
+
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
@@ -43,7 +45,10 @@ export function LoginView(props) {
         <Button className="login-button mt-3" type="button" variant="dark" size="sm" type="submit">Submit</Button>
         <Form.Group controlId="link-to-registration" className="register-here mt-3">
           <Form.Text>Haven't got an account yet.. </Form.Text>
-          <Button className="link-to-registration-button mt-3" type="button" variant="dark" size="sm" onClick={showRegistrationView}>Register Here!!</Button>
+
+          <Link to={`/register`}>
+            <Button className="link-to-registration-button mt-3" type="button" variant="dark" size="sm">Register Here!!</Button>
+          </Link>
         </Form.Group>
 
 

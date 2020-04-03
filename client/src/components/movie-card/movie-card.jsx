@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from "react-router-dom";
+
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -17,7 +19,10 @@ export class MovieCard extends React.Component {
             <Card.Title>{movie.Title}</Card.Title>
             <div className="text-card-styling"></div>
             <Card.Text className="card-text">{movie.Description}</Card.Text>
-            <Button onClick={() => onClick(movie)} type="button" variant="dark" size="sm" block>Find out more</Button>
+            <Link to={`/movies/${movie._id}`}>
+
+              <Button type="button" variant="dark" size="sm" block>Find out more</Button>
+            </Link>
           </Card.Body>
         </Card >
       </div>
@@ -33,13 +38,10 @@ MovieCard.propTypes = {
     Description: PropTypes.string.isRequired,
     ImagePath: PropTypes.string.isRequired,
     Genre: PropTypes.shape({
-      Name: PropTypes.string.isRequired,
-      Description: PropTypes.string.isRequired
+      Name: PropTypes.string.isRequired
     }),
     Director: PropTypes.shape({
-      Name: PropTypes.string.isRequired,
-      Bio: PropTypes.string.isRequired,
+      Name: PropTypes.string.isRequired
     }),
-  }).isRequired,
-  onClick: PropTypes.func.isRequired
+  })
 };

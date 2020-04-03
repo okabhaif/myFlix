@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from "react-router-dom";
+
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -39,10 +41,24 @@ export class MovieView extends React.Component {
               <span className="label"> Director: </span>
               <span className="value"> {movie.Director.Name} </span>
             </div>
+            <Link to={`/`}>
 
-            <Button variant="dark" className="nav-to-home mt-3" type="button" size="sm" onClick={this.props.resetMovie} >Home</Button>
+              <Button variant="dark" className="nav-to-home mt-3" type="button" size="sm" >Home</Button>
+            </Link>
+
           </div>
 
+        </Col>
+        <Col lg={8} sm={12}>
+          <Row>
+            <Link to={`/directors/${movie.Director.Name}`}>
+              <Button variant="dark">Director</Button>
+            </Link>
+
+            <Link to={`/genres/${movie.Genre.Name}`}>
+              <Button variant="dark">Genre</Button>
+            </Link>
+          </Row>
         </Col>
       </Container>
 

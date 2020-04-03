@@ -1,3 +1,12 @@
+.movie-view {
+  font-family: "Oswald", sans-serif;
+}
+
+.movie-poster {
+  max-height: 560px;
+  overflow: hidden;
+  max-width: 80%;
+}
 .text-card-styling {
   position: absolute;
   bottom: 0;
@@ -22,15 +31,6 @@
   height: 420px;
   overflow: hidden;
   width: 100%;
-}
-.movie-view {
-  font-family: "Oswald", sans-serif;
-}
-
-.movie-poster {
-  max-height: 560px;
-  overflow: hidden;
-  max-width: 80%;
 }
 body {
   font-family: "Oswald", sans-serif;
