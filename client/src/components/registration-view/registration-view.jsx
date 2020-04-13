@@ -16,22 +16,7 @@ export function RegistrationView(props) {
   const handleRegistration = (e) => {
 
     e.preventDefault();
-    axios.post('https://myflix-project.herokuapp.com/users', {
-      // Send a request to the server for authentication then call props.onLoggedIn(username)
-      Username: username,
-      Password: password,
-      Email: email,
-      DOB: DOB
-    })
-      .then(response => {
-        const data = response.data;
-        console.log(data);
-        window.open('/', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
-
-      })
-      .catch(e => {
-        console.error('error registering the user')
-      });
+    props.createNewUser({ username, password, email, DOB });
   };
 
 

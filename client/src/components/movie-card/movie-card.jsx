@@ -7,9 +7,13 @@ import Card from 'react-bootstrap/Card';
 import './movie-card.scss';
 
 export class MovieCard extends React.Component {
-  render() {
-    const { movie, onClick } = this.props;
 
+  delete() {
+    this.props.deleteMovie(this.props.movie._id);
+  }
+
+  render() {
+    const { movie, deleteMovie } = this.props;
     return (
 
       <div className="movie-card-container">
@@ -23,6 +27,7 @@ export class MovieCard extends React.Component {
 
               <Button type="button" variant="dark" size="sm" block>Find out more</Button>
             </Link>
+            {deleteMovie && <Button type="button" className="mt-2" variant="dark" size="sm" block onClick={this.delete.bind(this)}>Delete</Button>}
           </Card.Body>
         </Card >
       </div>

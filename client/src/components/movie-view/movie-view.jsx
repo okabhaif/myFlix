@@ -41,10 +41,6 @@ export class MovieView extends React.Component {
               <span className="label"> Director: </span>
               <span className="value"> {movie.Director.Name} </span>
             </div>
-            <Link to={`/`}>
-
-              <Button variant="dark" className="nav-to-home mt-3" type="button" size="sm" >Home</Button>
-            </Link>
 
           </div>
 

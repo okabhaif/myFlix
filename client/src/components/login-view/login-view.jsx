@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
-import axios from 'axios';
 
 
 
@@ -13,22 +12,10 @@ export function LoginView(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const { showRegistrationView } = props;
-
   const handleSubmit = (e) => {
     e.preventDefault();
     /*send request to server for authentication */
-    axios.post('https://myflix-project.herokuapp.com/login', {
-      Username: username,
-      Password: password
-    })
-      .then(response => {
-        const data = response.data;
-        props.onLoggedIn(data);
-      })
-      .catch(e => {
-        console.error(e)
-      });
+    props.handleLogin({ username, password });
   };
 
   return (
