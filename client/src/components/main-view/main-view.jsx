@@ -1,24 +1,25 @@
 import React from 'react';
 import axios from 'axios';
-import Button from 'react-bootstrap/Button';
+import { connect } from 'react-redux';
 import { Router, Route } from "react-router-dom";
 import createBrowserHistory from 'history/createBrowserHistory';
 
+// #0
+import { setMovies } from '../../actions/actions';
+
+import { NavView } from '../nav-view/nav-view';
 import { LoginView } from '../login-view/login-view';
-import { ProfileView } from '../profile-view/profile-view';
-// import { NavView } from '../nav-view/nav-view';
+import { RegistrationView } from '../registration-view/registration-view';
+import { DeregistrationView } from '../update-view/deregisteration-view.jsx';
+
+
+import MoviesList from '../movie-list/movie-list';
+import { MovieView } from '../movie-view/movie-view';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
 
-import { RegistrationView } from '../registration-view/registration-view';
-import { MovieView } from '../movie-view/movie-view';
-import { MovieList } from '../movie-list/movie-list';
-import { NavView } from '../nav-view/nav-view';
-import { UpdateUsernameView } from '../update-view/update-username.jsx';
-import { UpdatePasswordView } from '../update-view/update-password.jsx';
-import { UpdateEmailView } from '../update-view/update-email.jsx';
-import { UpdateDOBView } from '../update-view/update-dob.jsx';
-import { DeregistrationView } from '../update-view/deregisteration-view.jsx';
+
+import { ProfileView } from '../profile-view/profile-view';
 
 
 const browserHistory = createBrowserHistory();
@@ -29,7 +30,6 @@ export class MainView extends React.Component {
     super();
 
     this.state = {
-      movies: [],
       user: null,
     };
   }
@@ -50,10 +50,8 @@ export class MainView extends React.Component {
       headers: { Authorization: `Bearer ${this.getToken()}` }
     })
       .then(response => {
-        // Assign the result to the state
-        this.setState({
-          movies: response.data
-        });
+        this.props.setMovies(response.data);
+
       })
       .catch(function (error) {
         console.log(error);
@@ -175,8 +173,9 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const { movies, user } = this.state;
-
+    // #2
+    let { movies } = this.props;
+    let { user } = this.state;
 
     if (!movies) return <div className="main-view" />;
 
@@ -186,22 +185,20 @@ export class MainView extends React.Component {
         <div className="main-view">
           <Route exact path="/" render={() => {
             if (!user) return <LoginView handleLogin={user => this.handleLogin(user)} />;
-            return <MovieList movies={movies} />
+            return <MoviesList movies={movies} />
           }} />
           <Route path="/register" render={() => <RegistrationView createNewUser={user => this.createNewUser(user)} />} />
           <Route path="/unregister" render={() => <DeregistrationView deleteUser={user => this.deleteUser(user)} />} />
 
           {/* user paths  */}
           <Route exact path="/profile" render={() => {
-            if (!user) return <div className="main-view" />
-            return <ProfileView user={user} movies={movies} deleteMovie={this.deleteMovie.bind(this)} />
+            if (!user) {
+              return <div className="main-view" />
+            }
+            return <ProfileView user={user} movies={movies} deleteMovie={this.deleteMovie.bind(this)} handleUpdateUser={user => this.handleUpdateUser(user)} />
           }}
           />
-          <Route exact path="/update" render={() => <UpdateView user={user} />} />
-          <Route exact path="/update-username" render={() => <UpdateUsernameView handleUpdateUser={user => this.handleUpdateUser(user)} />} />
-          <Route exact path="/update-password" render={() => <UpdatePasswordView handleUpdateUser={user => this.handleUpdateUser(user)} />} />
-          <Route exact path="/update-email" render={() => <UpdateEmailView handleUpdateUser={user => this.handleUpdateUser(user)} />} />
-          <Route exact path="/update-DOB" render={() => <UpdateDOBView handleUpdateUser={user => this.handleUpdateUser(user)} />} />
+
 
           <Route path="/movies/:movieId" render={({ match }) => <MovieView movie={movies.find(m => m._id === match.params.movieId)} />} />
           <Route path="/directors/:name" render={({ match }) => {
@@ -218,6 +215,14 @@ export class MainView extends React.Component {
     );
   }
 }
+
+// #3
+let mapStateToProps = state => {
+  return { movies: state.movies }
+}
+
+// #4
+export default connect(mapStateToProps, { setMovies })(MainView);
 
 
         // <Button className="logout-button mt-3" type="button" variant="dark" size="sm" onClick={this.onLogout.bind(this)}>Logout</Button>

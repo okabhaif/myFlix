@@ -6,11 +6,43 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import './profile-view.scss';
-import { MovieList } from '../movie-list/movie-list.jsx'
-import { UpdateUsernameView } from '../update-view/update-username.jsx';
+import MoviesList from '../movie-list/movie-list.jsx'
+import { UpdateUserModal } from '../update-view/update-user-modal.jsx';
 
 export class ProfileView extends React.Component {
 
+  constructor() {
+    super();
+    this.state = {
+      showUpdateModal: false,
+      updateData: null
+    };
+  }
+
+
+  showUpdateModal(data) {
+    this.setState({
+      showUpdateModal: true,
+      updateData: data
+    })
+  }
+
+  submitUpdate({
+    field,
+    value
+  }) {
+    this.props.handleUpdateUser({
+      [field]: value
+    });
+    this.closeModal();
+  }
+
+  closeModal() {
+    this.setState({
+      showUpdateModal: false,
+      updateData: null
+    });
+  }
 
   render() {
     const { user, movies, deleteMovie } = this.props;
@@ -25,49 +57,80 @@ export class ProfileView extends React.Component {
           <div className="user-view p-5">
 
 
-            <div className="user-title mt-3">
+            <div className="user-username mt-3">
               <span className="label"> Username: </span>
               <span className="value"> {user.Username} </span>
             </div>
+            <Button type="button" className="update-username" variant="dark" size="sm" onClick={() => this.showUpdateModal({
+              inputType: 'text',
+              inputName: 'username',
+              updateField: 'Username',
+              inputPlaceholder: 'Please set a new Username here',
+              initial: user.username
+
+            })}>Update Username</Button>
+
+            <div className="user-password mt-3">
+              <span className="label"> Password: </span>
+              <span className="value"> ############## </span>
+            </div>
+            <Button type="button" className="update-password" variant="dark" size="sm" onClick={() => this.showUpdateModal({
+              inputType: 'password',
+              inputName: 'password',
+              updateField: 'Password',
+              inputPlaceholder: 'Please set a new Password here',
+              initial: user.password
+
+            })}>Update Password</Button>
+
+
             <div className="user-title mt-3">
               <span className="label"> Registered Email: </span>
               <span className="value"> {user.Email} </span>
             </div>
+            <Button type="button" className="update-email" variant="dark" size="sm" onClick={() => this.showUpdateModal({
+              inputType: 'email',
+              inputName: 'email',
+              updateField: 'Email',
+              inputPlaceholder: 'Please set a new email here',
+              initial: user.email
+
+            })}>Update Email</Button>
+
             <div className="user-title mt-3">
               <span className="label"> DOB: </span>
               <span className="value"> {user.DOB.substr(0, 10)} </span>
             </div>
+            <Button type="button" className="update-DOB" variant="dark" size="sm" onClick={() => this.showUpdateModal({
+              inputType: 'date',
+              inputName: 'DOB',
+              updateField: 'DOB',
+              inputPlaceholder: 'Please update your DOB here',
+              initial: user.DOB
+
+            })}>Update DOB</Button>
 
           </div>
-          <div>
-            <Link to={`/update-username`}>
 
-              <Button type="button" className="nav-to-update-username" variant="dark" size="sm"> Update username</Button>
-            </Link>
-            <Link to={`/update-password`}>
+          <Link to={`/unregister`}>
 
-              <Button type="button" className="nav-to-update-password" variant="dark" size="sm"> Update password</Button>
-            </Link>
-            <Link to={`/update-email`}>
-
-              <Button type="button" className="nav-to-update-email" variant="dark" size="sm"> Update Email</Button>
-            </Link>
-            <Link to={`/update-DOB`}>
-
-              <Button type="button" className="nav-to-update-DOB" variant="dark" size="sm"> Update DOB</Button>
-            </Link>
-            <Link to={`/unregister`}>
-
-              <Button type="button" className="nav-to-unregister" variant="dark" size="sm">Delete my account</Button>
-            </Link>
-          </div>
+            <Button type="button" className="nav-to-unregister" variant="dark" size="sm">Delete my account</Button>
+          </Link>
         </Col>
-      </Container>,
+      </Container >,
       <Container>
         <div className="favourites-list">
           <span className="label"> {user.Username}'s Favourite Movies: </span>
-          <span className="value"> <MovieList movies={favMovies} deleteMovie={deleteMovie} /> </span>
+          <span className="value"> <MoviesList movies={favMovies} deleteMovie={deleteMovie} /> </span>
         </div>
+        {this.state.updateData && <UpdateUserModal
+          inputType={this.state.updateData.inputType}
+          inputName={this.state.updateData.inputName}
+          inputPlaceholder={this.state.updateData.inputPlaceholder}
+          show={this.state.showUpdateModal}
+          onSubmit={data => this.submitUpdate(data)}
+          initial={this.state.updateData.initial}
+          closeModal={() => this.closeModal()} />}
 
 
       </Container>]
