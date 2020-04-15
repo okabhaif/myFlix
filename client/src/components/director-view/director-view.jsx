@@ -34,8 +34,13 @@ export class DirectorView extends React.Component {
 
             <div className="director-DOB">
               <span className="label"> DOB: </span>
-              <span className="value"> {director.DOB.substr(0, 10)} </span>
+              <span className="value"> {director.DOB ? director.DOB.substr(0, 10) : 'Unknown!'} </span>
             </div>
+
+            {director.Died && <div className="director-Died">
+              <span className="label"> Died: </span>
+              <span className="value">  {director.Died.substr(0, 10)} </span>
+            </div>}
 
             <Link to={`/`}>
 

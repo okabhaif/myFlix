@@ -42280,7 +42280,13 @@ var DirectorView = /*#__PURE__*/function (_React$Component) {
         className: "label"
       }, " DOB: "), _react.default.createElement("span", {
         className: "value"
-      }, " ", director.DOB.substr(0, 10), " ")), _react.default.createElement(_reactRouterDom.Link, {
+      }, " ", director.DOB ? director.DOB.substr(0, 10) : 'Unknown!', " ")), director.Died && _react.default.createElement("div", {
+        className: "director-Died"
+      }, _react.default.createElement("span", {
+        className: "label"
+      }, " Died: "), _react.default.createElement("span", {
+        className: "value"
+      }, "  ", director.Died.substr(0, 10), " ")), _react.default.createElement(_reactRouterDom.Link, {
         to: "/"
       }, _react.default.createElement(_Button.default, {
         variant: "dark",
@@ -44923,7 +44929,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52642" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53582" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
