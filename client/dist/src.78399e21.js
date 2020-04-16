@@ -37328,16 +37328,26 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.setMovies = setMovies;
+exports.setUser = setUser;
 exports.setFilter = setFilter;
-exports.SET_FILTER = exports.SET_MOVIES = void 0;
+exports.SET_USER = exports.SET_FILTER = exports.SET_MOVIES = void 0;
 var SET_MOVIES = 'SET_MOVIES';
 exports.SET_MOVIES = SET_MOVIES;
 var SET_FILTER = 'SET_FILTER';
 exports.SET_FILTER = SET_FILTER;
+var SET_USER = 'SET_USER';
+exports.SET_USER = SET_USER;
 
 function setMovies(value) {
   return {
     type: SET_MOVIES,
+    value: value
+  };
+}
+
+function setUser(value) {
+  return {
+    type: SET_USER,
     value: value
   };
 }
@@ -44490,25 +44500,26 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   _inherits(MainView, _React$Component);
 
   function MainView() {
-    var _this;
-
     _classCallCheck(this, MainView);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(MainView).call(this));
-    _this.state = {
-      user: null
-    };
-    return _this;
-  } // One of the "hooks" available in a React Component
-
+    return _possibleConstructorReturn(this, _getPrototypeOf(MainView).apply(this, arguments));
+  }
 
   _createClass(MainView, [{
     key: "componentDidMount",
+    // constructor() {
+    //   super();
+    //   this.state = {
+    //     user: null,
+    //   };
+    // }
+    // One of the "hooks" available in a React Component
     value: function componentDidMount() {
       var accessToken = localStorage.getItem('token');
 
       if (accessToken !== null) {
-        this.setState({
+        // this.setState({
+        this.props.setUser({
           user: JSON.parse(localStorage.getItem('user'))
         });
         this.getMovies(accessToken);
@@ -44517,14 +44528,14 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "getMovies",
     value: function getMovies() {
-      var _this2 = this;
+      var _this = this;
 
       _axios.default.get('https://myflix-project.herokuapp.com/movies', {
         headers: {
           Authorization: "Bearer ".concat(this.getToken())
         }
       }).then(function (response) {
-        _this2.props.setMovies(response.data);
+        _this.props.setMovies(response.data);
       }).catch(function (error) {
         console.log(error);
       });
@@ -44532,7 +44543,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "setUser",
     value: function setUser(user) {
-      this.setState({
+      this.props.setUser({
         user: user
       });
       localStorage.setItem('user', JSON.stringify(user));
@@ -44561,7 +44572,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleLogin",
     value: function handleLogin(_ref2) {
-      var _this3 = this;
+      var _this2 = this;
 
       var username = _ref2.username,
           password = _ref2.password;
@@ -44572,7 +44583,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       }).then(function (response) {
         var data = response.data;
 
-        _this3.onLoggedIn(data);
+        _this2.onLoggedIn(data);
       }).catch(function (e) {
         console.error(e);
       });
@@ -44588,14 +44599,14 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "deleteMovie",
     value: function deleteMovie(movieId) {
-      var _this4 = this;
+      var _this3 = this;
 
-      _axios.default.delete('https://myflix-project.herokuapp.com/users/' + this.state.user.Username + '/movies/' + movieId, {
+      _axios.default.delete('https://myflix-project.herokuapp.com/users/' + this.props.user.Username + '/movies/' + movieId, {
         headers: {
           Authorization: "Bearer ".concat(this.getToken())
         }
       }).then(function (response) {
-        _this4.setUser(response.data);
+        _this3.setUser(response.data);
       }).catch(function (error) {
         console.log(error);
       });
@@ -44603,7 +44614,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "deleteUser",
     value: function deleteUser(username, password) {
-      _axios.default.delete("https://myflix-project.herokuapp.com/users/" + this.state.user.Username, {
+      _axios.default.delete("https://myflix-project.herokuapp.com/users/" + this.props.user.Username, {
         headers: {
           Authorization: "Bearer ".concat(this.getToken())
         }
@@ -44619,14 +44630,14 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleUpdateUser",
     value: function handleUpdateUser(_ref3) {
-      var _this5 = this;
+      var _this4 = this;
 
       var username = _ref3.username,
           password = _ref3.password,
           email = _ref3.email,
           DOB = _ref3.DOB;
 
-      _axios.default.put('https://myflix-project.herokuapp.com/users/' + this.state.user.Username, {
+      _axios.default.put('https://myflix-project.herokuapp.com/users/' + this.props.user.Username, {
         Username: username,
         Password: password,
         Email: email,
@@ -44636,7 +44647,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           Authorization: "Bearer ".concat(this.getToken())
         }
       }).then(function (response) {
-        _this5.setUser(response.data); // console.log(data);
+        _this4.setUser(response.data); // console.log(data);
 
 
         browserHistory.push("/profile");
@@ -44653,7 +44664,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
     key: "onLogout",
     value: function onLogout() {
       console.log();
-      this.setState({
+      this.setUser({
         movies: null,
         user: null
       });
@@ -44664,11 +44675,13 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this6 = this;
+      var _this5 = this;
 
       // #2
-      var movies = this.props.movies;
-      var user = this.state.user;
+      var _this$props = this.props,
+          movies = _this$props.movies,
+          user = _this$props.user; // let { user } = this.state;
+
       if (!movies) return _react.default.createElement("div", {
         className: "main-view"
       });
@@ -44685,7 +44698,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         render: function render() {
           if (!user) return _react.default.createElement(_loginView.LoginView, {
             handleLogin: function handleLogin(user) {
-              return _this6.handleLogin(user);
+              return _this5.handleLogin(user);
             }
           });
           return _react.default.createElement(_movieList.default, {
@@ -44697,7 +44710,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         render: function render() {
           return _react.default.createElement(_registrationView.RegistrationView, {
             createNewUser: function createNewUser(user) {
-              return _this6.createNewUser(user);
+              return _this5.createNewUser(user);
             }
           });
         }
@@ -44706,7 +44719,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         render: function render() {
           return _react.default.createElement(_deregisterationView.DeregistrationView, {
             deleteUser: function deleteUser(user) {
-              return _this6.deleteUser(user);
+              return _this5.deleteUser(user);
             }
           });
         }
@@ -44723,9 +44736,9 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           return _react.default.createElement(_profileView.ProfileView, {
             user: user,
             movies: movies,
-            deleteMovie: _this6.deleteMovie.bind(_this6),
+            deleteMovie: _this5.deleteMovie.bind(_this5),
             handleUpdateUser: function handleUpdateUser(user) {
-              return _this6.handleUpdateUser(user);
+              return _this5.handleUpdateUser(user);
             }
           });
         }
@@ -44777,13 +44790,15 @@ exports.MainView = MainView;
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    movies: state.movies
+    movies: state.movies,
+    user: state.user
   };
 }; // #4
 
 
 var _default = (0, _reactRedux.connect)(mapStateToProps, {
-  setMovies: _actions.setMovies
+  setMovies: _actions.setMovies,
+  setUser: _actions.setUser
 })(MainView); // <Button className="logout-button mt-3" type="button" variant="dark" size="sm" onClick={this.onLogout.bind(this)}>Logout</Button>
 
 
@@ -44813,6 +44828,19 @@ function visibilityFilter() {
   }
 }
 
+function user() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _actions.SET_USER:
+      return action.value.user;
+
+    default:
+      return state;
+  }
+}
+
 function movies() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
@@ -44827,6 +44855,7 @@ function movies() {
 }
 
 var moviesApp = (0, _redux.combineReducers)({
+  user: user,
   visibilityFilter: visibilityFilter,
   movies: movies
 });
@@ -44874,7 +44903,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var store = (0, _redux.createStore)(_reducers.default); // Main component (will eventually use all the others)
+var store = (0, _redux.createStore)(_reducers.default, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()); // Main component (will eventually use all the others)
 
 var MyFlixApplication = /*#__PURE__*/function (_React$Component) {
   _inherits(MyFlixApplication, _React$Component);
@@ -44929,7 +44958,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53582" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54313" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

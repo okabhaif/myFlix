@@ -9,7 +9,9 @@ import moviesApp from './reducers/reducers';
 // Import statement to indicate that we need to bundle `./index.scss`
 import './index.scss';
 
-const store = createStore(moviesApp);
+const store = createStore(moviesApp,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 // Main component (will eventually use all the others)
 class MyFlixApplication extends React.Component {

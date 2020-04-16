@@ -6,6 +6,7 @@ import createBrowserHistory from 'history/createBrowserHistory';
 
 // #0
 import { setMovies } from '../../actions/actions';
+import { setUser } from '../../actions/actions';
 
 import { NavView } from '../nav-view/nav-view';
 import { LoginView } from '../login-view/login-view';
@@ -26,19 +27,20 @@ const browserHistory = createBrowserHistory();
 
 export class MainView extends React.Component {
 
-  constructor() {
-    super();
+  // constructor() {
+  //   super();
 
-    this.state = {
-      user: null,
-    };
-  }
+  //   this.state = {
+  //     user: null,
+  //   };
+  // }
 
   // One of the "hooks" available in a React Component
   componentDidMount() {
     let accessToken = localStorage.getItem('token');
     if (accessToken !== null) {
-      this.setState({
+      // this.setState({
+      this.props.setUser({
         user: JSON.parse(localStorage.getItem('user'))
       });
       this.getMovies(accessToken);
@@ -59,7 +61,7 @@ export class MainView extends React.Component {
   }
 
   setUser(user) {
-    this.setState({
+    this.props.setUser({
       user
     });
     localStorage.setItem('user', JSON.stringify(user));
@@ -107,7 +109,7 @@ export class MainView extends React.Component {
   }
 
   deleteMovie(movieId) {
-    axios.delete('https://myflix-project.herokuapp.com/users/' + this.state.user.Username + '/movies/' + movieId, {
+    axios.delete('https://myflix-project.herokuapp.com/users/' + this.props.user.Username + '/movies/' + movieId, {
       headers: { Authorization: `Bearer ${this.getToken()}` }
     })
       .then(response => {
@@ -119,7 +121,7 @@ export class MainView extends React.Component {
   }
 
   deleteUser(username, password) {
-    axios.delete(`https://myflix-project.herokuapp.com/users/` + this.state.user.Username, {
+    axios.delete(`https://myflix-project.herokuapp.com/users/` + this.props.user.Username, {
       headers: { Authorization: `Bearer ${this.getToken()}` }
     })
       .then(response => {
@@ -135,7 +137,7 @@ export class MainView extends React.Component {
   }
 
   handleUpdateUser({ username, password, email, DOB }) {
-    axios.put('https://myflix-project.herokuapp.com/users/' + this.state.user.Username, {
+    axios.put('https://myflix-project.herokuapp.com/users/' + this.props.user.Username, {
       Username: username,
       Password: password,
       Email: email,
@@ -161,7 +163,7 @@ export class MainView extends React.Component {
 
   onLogout() {
     console.log();
-    this.setState({
+    this.setUser({
       movies: null,
       user: null,
     });
@@ -174,8 +176,8 @@ export class MainView extends React.Component {
 
   render() {
     // #2
-    let { movies } = this.props;
-    let { user } = this.state;
+    let { movies, user } = this.props;
+    // let { user } = this.state;
 
     if (!movies) return <div className="main-view" />;
 
@@ -218,11 +220,11 @@ export class MainView extends React.Component {
 
 // #3
 let mapStateToProps = state => {
-  return { movies: state.movies }
+  return { movies: state.movies, user: state.user }
 }
 
 // #4
-export default connect(mapStateToProps, { setMovies })(MainView);
+export default connect(mapStateToProps, { setMovies, setUser })(MainView);
 
 
         // <Button className="logout-button mt-3" type="button" variant="dark" size="sm" onClick={this.onLogout.bind(this)}>Logout</Button>
