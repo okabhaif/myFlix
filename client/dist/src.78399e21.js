@@ -37330,13 +37330,19 @@ Object.defineProperty(exports, "__esModule", {
 exports.setMovies = setMovies;
 exports.setUser = setUser;
 exports.setFilter = setFilter;
-exports.SET_USER = exports.SET_FILTER = exports.SET_MOVIES = void 0;
+exports.setUpdateData = setUpdateData;
+exports.setShowModal = setShowModal;
+exports.SET_SHOWMODAL = exports.SET_UPDATEDATA = exports.SET_USER = exports.SET_FILTER = exports.SET_MOVIES = void 0;
 var SET_MOVIES = 'SET_MOVIES';
 exports.SET_MOVIES = SET_MOVIES;
 var SET_FILTER = 'SET_FILTER';
 exports.SET_FILTER = SET_FILTER;
 var SET_USER = 'SET_USER';
 exports.SET_USER = SET_USER;
+var SET_UPDATEDATA = 'SET_UPDATEDATA';
+exports.SET_UPDATEDATA = SET_UPDATEDATA;
+var SET_SHOWMODAL = 'SET_SHOWMODAL';
+exports.SET_SHOWMODAL = SET_SHOWMODAL;
 
 function setMovies(value) {
   return {
@@ -37355,6 +37361,20 @@ function setUser(value) {
 function setFilter(value) {
   return {
     type: SET_FILTER,
+    value: value
+  };
+}
+
+function setUpdateData(value) {
+  return {
+    type: SET_UPDATEDATA,
+    value: value
+  };
+}
+
+function setShowModal(value) {
+  return {
+    type: SET_SHOWMODAL,
     value: value
   };
 }
@@ -40384,6 +40404,8 @@ var _Navbar = _interopRequireDefault(require("react-bootstrap/Navbar"));
 
 var _Nav = _interopRequireDefault(require("react-bootstrap/Nav"));
 
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -40445,7 +40467,11 @@ var NavView = /*#__PURE__*/function (_React$Component) {
 }(_react.default.Component);
 
 exports.NavView = NavView;
-},{"react":"../node_modules/react/index.js","react-bootstrap/Navbar":"../node_modules/react-bootstrap/esm/Navbar.js","react-bootstrap/Nav":"../node_modules/react-bootstrap/esm/Nav.js"}],"../node_modules/react-bootstrap/esm/Button.js":[function(require,module,exports) {
+NavView.propTypes = {
+  user: _propTypes.default.object,
+  onLogout: _propTypes.default.func.isRequired
+};
+},{"react":"../node_modules/react/index.js","react-bootstrap/Navbar":"../node_modules/react-bootstrap/esm/Navbar.js","react-bootstrap/Nav":"../node_modules/react-bootstrap/esm/Nav.js","prop-types":"../node_modules/prop-types/index.js"}],"../node_modules/react-bootstrap/esm/Button.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -41306,6 +41332,8 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _reactRouterDom = require("react-router-dom");
 
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
 var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
@@ -41393,7 +41421,15 @@ function LoginView(props) {
     size: "sm"
   }, "Register Here!!")))));
 }
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js"}],"components/registration-view/registration-view.jsx":[function(require,module,exports) {
+
+LoginView.propTypes = {
+  handleSubmit: _propTypes.default.shape({
+    handleLogin: _propTypes.default.func.isRequired,
+    username: _propTypes.default.string.isRequired,
+    password: _propTypes.default.string.isRequired
+  })
+};
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js"}],"components/registration-view/registration-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -41403,9 +41439,9 @@ exports.RegistrationView = RegistrationView;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _axios = _interopRequireDefault(require("axios"));
-
 var _reactRouterDom = require("react-router-dom");
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
@@ -41521,7 +41557,17 @@ function RegistrationView(props) {
     size: "sm"
   }, " Back"))));
 }
-},{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js"}],"components/update-view/deregisteration-view.jsx":[function(require,module,exports) {
+
+RegistrationView.propTypes = {
+  handleRegistration: _propTypes.default.func,
+  createNewUser: _propTypes.default.exact({
+    username: _propTypes.default.string,
+    password: _propTypes.default.string,
+    email: _propTypes.default.string,
+    DOB: _propTypes.default.string
+  })
+};
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js"}],"components/update-view/deregisteration-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -41530,6 +41576,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.DeregistrationView = DeregistrationView;
 
 var _react = _interopRequireWildcard(require("react"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
@@ -41612,7 +41660,15 @@ function DeregistrationView(props) {
     size: "sm"
   }, "type", "submit"), "Unregister"))));
 }
-},{"react":"../node_modules/react/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js"}],"../node_modules/react-bootstrap/esm/Row.js":[function(require,module,exports) {
+
+DeregistrationView.propTypes = {
+  handleDeregistration: _propTypes.default.func,
+  deleteUser: _propTypes.default.exact({
+    username: _propTypes.default.string,
+    password: _propTypes.default.string
+  })
+};
+},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js"}],"../node_modules/react-bootstrap/esm/Row.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -42025,7 +42081,8 @@ MovieCard.propTypes = {
     Director: _propTypes.default.shape({
       Name: _propTypes.default.string.isRequired
     })
-  })
+  }),
+  deleteMovie: _propTypes.default.func
 };
 },{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js","./movie-card.scss":"components/movie-card/movie-card.scss"}],"components/movie-list/movie-list.jsx":[function(require,module,exports) {
 "use strict";
@@ -42113,6 +42170,8 @@ var _react = _interopRequireDefault(require("react"));
 
 var _reactRouterDom = require("react-router-dom");
 
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
 var _Container = _interopRequireDefault(require("react-bootstrap/Container"));
@@ -42126,6 +42185,8 @@ require("./movie-view.scss");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -42207,7 +42268,20 @@ var MovieView = /*#__PURE__*/function (_React$Component) {
 }(_react.default.Component);
 
 exports.MovieView = MovieView;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Row":"../node_modules/react-bootstrap/esm/Row.js","react-bootstrap/Col":"../node_modules/react-bootstrap/esm/Col.js","./movie-view.scss":"components/movie-view/movie-view.scss"}],"components/director-view/director-view.scss":[function(require,module,exports) {
+MovieView.propTypes = _defineProperty({
+  movie: _propTypes.default.object.isRequired
+}, "movie", _propTypes.default.shape({
+  Title: _propTypes.default.string.isRequired,
+  Description: _propTypes.default.string.isRequired,
+  ImagePath: _propTypes.default.string.isRequired,
+  Genre: _propTypes.default.shape({
+    Name: _propTypes.default.string.isRequired
+  }),
+  Director: _propTypes.default.shape({
+    Name: _propTypes.default.string.isRequired
+  })
+}));
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Row":"../node_modules/react-bootstrap/esm/Row.js","react-bootstrap/Col":"../node_modules/react-bootstrap/esm/Col.js","./movie-view.scss":"components/movie-view/movie-view.scss"}],"components/director-view/director-view.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -42267,14 +42341,11 @@ var DirectorView = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       var director = this.props.director;
-      return _react.default.createElement(_Container.default, null, _react.default.createElement(_Col.default, {
-        lg: 8,
-        sm: 12
-      }, _react.default.createElement("div", {
+      return _react.default.createElement(_Container.default, null, _react.default.createElement(_Col.default, null, _react.default.createElement("div", {
         className: "director-view p-5"
       }, _react.default.createElement("div", {
         className: "director-name mt-3"
-      }, _react.default.createElement("span", {
+      }, _react.default.createElement("h1", {
         className: "label"
       }, " Director: "), _react.default.createElement("span", {
         className: "value"
@@ -42314,7 +42385,9 @@ exports.DirectorView = DirectorView;
 DirectorView.propTypes = {
   director: _propTypes.default.shape({
     Name: _propTypes.default.string.isRequired,
-    Bio: _propTypes.default.string.isRequired
+    Bio: _propTypes.default.string.isRequired,
+    DOB: _propTypes.default.Date,
+    Died: _propTypes.default.Date
   })
 };
 },{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Col":"../node_modules/react-bootstrap/esm/Col.js","./director-view.scss":"components/director-view/director-view.scss"}],"components/genre-view/genre-view.scss":[function(require,module,exports) {
@@ -44220,11 +44293,15 @@ function UpdateUserModal(_ref) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ProfileView = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
+var _reactRedux = require("react-redux");
+
 var _reactRouterDom = require("react-router-dom");
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
@@ -44239,6 +44316,10 @@ require("./profile-view.scss");
 var _movieList = _interopRequireDefault(require("../movie-list/movie-list.jsx"));
 
 var _updateUserModal = require("../update-view/update-user-modal.jsx");
+
+var _actions = require("../../actions/actions");
+
+var _ProfileView$propType;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -44266,24 +44347,23 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
   _inherits(ProfileView, _React$Component);
 
   function ProfileView() {
-    var _this;
-
     _classCallCheck(this, ProfileView);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(ProfileView).call(this));
-    _this.state = {
-      showUpdateModal: false,
-      updateData: null
-    };
-    return _this;
+    return _possibleConstructorReturn(this, _getPrototypeOf(ProfileView).apply(this, arguments));
   }
 
   _createClass(ProfileView, [{
     key: "showUpdateModal",
     value: function showUpdateModal(data) {
-      this.setState({
-        showUpdateModal: true,
-        updateData: data
+      console.log(data, this);
+      data.show = true;
+      this.props.setShowModal(data);
+    }
+  }, {
+    key: "closeModal",
+    value: function closeModal() {
+      this.props.setShowModal({
+        show: false
       });
     }
   }, {
@@ -44295,26 +44375,18 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
       this.closeModal();
     }
   }, {
-    key: "closeModal",
-    value: function closeModal() {
-      this.setState({
-        showUpdateModal: false,
-        updateData: null
-      });
-    }
-  }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this = this;
 
       var _this$props = this.props,
           user = _this$props.user,
           movies = _this$props.movies,
-          deleteMovie = _this$props.deleteMovie;
+          deleteMovie = _this$props.deleteMovie,
+          showUpdateModal = _this$props.showUpdateModal;
       var favMovies = movies.filter(function (movie) {
         return user.FavouriteMovies.includes(movie._id);
       });
-      console.log(user, favMovies);
       return [_react.default.createElement(_Container.default, null, _react.default.createElement(_Col.default, {
         lg: 8,
         sm: 12
@@ -44332,7 +44404,7 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
         variant: "dark",
         size: "sm",
         onClick: function onClick() {
-          return _this2.showUpdateModal({
+          return _this.showUpdateModal({
             inputType: 'text',
             inputName: 'username',
             updateField: 'Username',
@@ -44352,7 +44424,7 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
         variant: "dark",
         size: "sm",
         onClick: function onClick() {
-          return _this2.showUpdateModal({
+          return _this.showUpdateModal({
             inputType: 'password',
             inputName: 'password',
             updateField: 'Password',
@@ -44372,7 +44444,7 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
         variant: "dark",
         size: "sm",
         onClick: function onClick() {
-          return _this2.showUpdateModal({
+          return _this.showUpdateModal({
             inputType: 'email',
             inputName: 'email',
             updateField: 'Email',
@@ -44392,7 +44464,7 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
         variant: "dark",
         size: "sm",
         onClick: function onClick() {
-          return _this2.showUpdateModal({
+          return _this.showUpdateModal({
             inputType: 'date',
             inputName: 'DOB',
             updateField: 'DOB',
@@ -44416,17 +44488,17 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
       }, " ", _react.default.createElement(_movieList.default, {
         movies: favMovies,
         deleteMovie: deleteMovie
-      }), " ")), this.state.updateData && _react.default.createElement(_updateUserModal.UpdateUserModal, {
-        inputType: this.state.updateData.inputType,
-        inputName: this.state.updateData.inputName,
-        inputPlaceholder: this.state.updateData.inputPlaceholder,
-        show: this.state.showUpdateModal,
+      }), " ")), this.props.modalData && this.props.modalData.show && _react.default.createElement(_updateUserModal.UpdateUserModal, {
+        inputType: this.props.modalData.inputType,
+        inputName: this.props.modalData.inputName,
+        inputPlaceholder: this.props.modalData.inputPlaceholder,
+        show: this.props.setShowModal,
         onSubmit: function onSubmit(data) {
-          return _this2.submitUpdate(data);
+          return _this.submitUpdate(data);
         },
-        initial: this.state.updateData.initial,
+        initial: this.props.modalData.initial,
         closeModal: function closeModal() {
-          return _this2.closeModal();
+          return _this.closeModal();
         }
       }))];
     }
@@ -44435,8 +44507,34 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
   return ProfileView;
 }(_react.default.Component);
 
-exports.ProfileView = ProfileView;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Row":"../node_modules/react-bootstrap/esm/Row.js","react-bootstrap/Col":"../node_modules/react-bootstrap/esm/Col.js","./profile-view.scss":"components/profile-view/profile-view.scss","../movie-list/movie-list.jsx":"components/movie-list/movie-list.jsx","../update-view/update-user-modal.jsx":"components/update-view/update-user-modal.jsx"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
+var mapStateToProps = function mapStateToProps(state) {
+  console.log(state);
+  return {
+    modalData: state.modalData
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps, {
+  setUpdateData: _actions.setUpdateData,
+  setShowModal: _actions.setShowModal
+})(ProfileView);
+
+exports.default = _default;
+ProfileView.propTypes = (_ProfileView$propType = {
+  showUpdateModal: _propTypes.default.func,
+  closeModal: _propTypes.default.func,
+  submitUpdate: _propTypes.default.func,
+  modalData: _propTypes.default.string,
+  user: _propTypes.default.object.isRequired
+}, _defineProperty(_ProfileView$propType, "user", _propTypes.default.shape({
+  _id: _propTypes.default.string,
+  FavouriteMovies: _propTypes.default.array,
+  Username: _propTypes.default.string,
+  Password: _propTypes.default.string,
+  Email: _propTypes.default.string,
+  DOB: _propTypes.default.string
+})), _defineProperty(_ProfileView$propType, "movie", _propTypes.default.array), _defineProperty(_ProfileView$propType, "favMovies", _propTypes.default.func), _defineProperty(_ProfileView$propType, "deleteMovie", _propTypes.default.func.isRequired), _ProfileView$propType);
+},{"react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Row":"../node_modules/react-bootstrap/esm/Row.js","react-bootstrap/Col":"../node_modules/react-bootstrap/esm/Col.js","./profile-view.scss":"components/profile-view/profile-view.scss","../movie-list/movie-list.jsx":"components/movie-list/movie-list.jsx","../update-view/update-user-modal.jsx":"components/update-view/update-user-modal.jsx","../../actions/actions":"actions/actions.js"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -44453,6 +44551,8 @@ var _reactRedux = require("react-redux");
 var _reactRouterDom = require("react-router-dom");
 
 var _createBrowserHistory = _interopRequireDefault(require("history/createBrowserHistory"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _actions = require("../../actions/actions");
 
@@ -44472,11 +44572,15 @@ var _directorView = require("../director-view/director-view");
 
 var _genreView = require("../genre-view/genre-view");
 
-var _profileView = require("../profile-view/profile-view");
+var _profileView = _interopRequireDefault(require("../profile-view/profile-view"));
+
+var _MainView$propTypes;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -44502,26 +44606,16 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   function MainView() {
     _classCallCheck(this, MainView);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(MainView).apply(this, arguments));
+    return _possibleConstructorReturn(this, _getPrototypeOf(MainView).call(this));
   }
 
   _createClass(MainView, [{
     key: "componentDidMount",
-    // constructor() {
-    //   super();
-    //   this.state = {
-    //     user: null,
-    //   };
-    // }
-    // One of the "hooks" available in a React Component
     value: function componentDidMount() {
       var accessToken = localStorage.getItem('token');
 
       if (accessToken !== null) {
-        // this.setState({
-        this.props.setUser({
-          user: JSON.parse(localStorage.getItem('user'))
-        });
+        this.props.setUser(JSON.parse(localStorage.getItem('user')));
         this.getMovies(accessToken);
       }
     }
@@ -44543,9 +44637,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "setUser",
     value: function setUser(user) {
-      this.props.setUser({
-        user: user
-      });
+      this.props.setUser(user);
       localStorage.setItem('user', JSON.stringify(user));
     }
   }, {
@@ -44733,7 +44825,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
             });
           }
 
-          return _react.default.createElement(_profileView.ProfileView, {
+          return _react.default.createElement(_profileView.default, {
             user: user,
             movies: movies,
             deleteMovie: _this5.deleteMovie.bind(_this5),
@@ -44799,11 +44891,37 @@ var mapStateToProps = function mapStateToProps(state) {
 var _default = (0, _reactRedux.connect)(mapStateToProps, {
   setMovies: _actions.setMovies,
   setUser: _actions.setUser
-})(MainView); // <Button className="logout-button mt-3" type="button" variant="dark" size="sm" onClick={this.onLogout.bind(this)}>Logout</Button>
+})(MainView); //PropTypes
 
 
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","react-redux":"../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","history/createBrowserHistory":"../node_modules/history/createBrowserHistory.js","../../actions/actions":"actions/actions.js","../nav-view/nav-view":"components/nav-view/nav-view.jsx","../login-view/login-view":"components/login-view/login-view.jsx","../registration-view/registration-view":"components/registration-view/registration-view.jsx","../update-view/deregisteration-view.jsx":"components/update-view/deregisteration-view.jsx","../movie-list/movie-list":"components/movie-list/movie-list.jsx","../movie-view/movie-view":"components/movie-view/movie-view.jsx","../director-view/director-view":"components/director-view/director-view.jsx","../genre-view/genre-view":"components/genre-view/genre-view.jsx","../profile-view/profile-view":"components/profile-view/profile-view.jsx"}],"reducers/reducers.js":[function(require,module,exports) {
+MainView.propTypes = (_MainView$propTypes = {
+  movies: _propTypes.default.array.isRequired,
+  user: _propTypes.default.object,
+  handleLogin: _propTypes.default.func
+}, _defineProperty(_MainView$propTypes, "handleLogin", _propTypes.default.shape({
+  username: _propTypes.default.string.isRequired,
+  password: _propTypes.default.string.isRequired
+})), _defineProperty(_MainView$propTypes, "onLoggedIn", _propTypes.default.func), _defineProperty(_MainView$propTypes, "onLogout", _propTypes.default.func), _defineProperty(_MainView$propTypes, "deleteMovie", _propTypes.default.func), _defineProperty(_MainView$propTypes, "deleteMovie", _propTypes.default.shape({
+  movieId: _propTypes.default.string.isRequired,
+  user: _propTypes.default.object,
+  username: _propTypes.default.string.isRequired
+})), _defineProperty(_MainView$propTypes, "deleteUser", _propTypes.default.func), _defineProperty(_MainView$propTypes, "deleteUser", _propTypes.default.shape({
+  user: _propTypes.default.object,
+  username: _propTypes.default.string.isRequired,
+  password: _propTypes.default.string.isRequired
+})), _defineProperty(_MainView$propTypes, "createNewUser", _propTypes.default.func), _defineProperty(_MainView$propTypes, "createNewUser", _propTypes.default.shape({
+  Username: _propTypes.default.string,
+  Password: _propTypes.default.string,
+  Email: _propTypes.default.string,
+  DOB: _propTypes.default.string
+})), _defineProperty(_MainView$propTypes, "handleUpdateUser", _propTypes.default.func), _defineProperty(_MainView$propTypes, "handleUpdateUser", _propTypes.default.shape({
+  Username: _propTypes.default.string,
+  Password: _propTypes.default.string,
+  Email: _propTypes.default.string,
+  DOB: _propTypes.default.string
+})), _defineProperty(_MainView$propTypes, "director", _propTypes.default.object), _defineProperty(_MainView$propTypes, "genre", _propTypes.default.object), _defineProperty(_MainView$propTypes, "setMovies", _propTypes.default.func), _defineProperty(_MainView$propTypes, "setUser", _propTypes.default.func), _MainView$propTypes);
+},{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","react-redux":"../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","history/createBrowserHistory":"../node_modules/history/createBrowserHistory.js","prop-types":"../node_modules/prop-types/index.js","../../actions/actions":"actions/actions.js","../nav-view/nav-view":"components/nav-view/nav-view.jsx","../login-view/login-view":"components/login-view/login-view.jsx","../registration-view/registration-view":"components/registration-view/registration-view.jsx","../update-view/deregisteration-view.jsx":"components/update-view/deregisteration-view.jsx","../movie-list/movie-list":"components/movie-list/movie-list.jsx","../movie-view/movie-view":"components/movie-view/movie-view.jsx","../director-view/director-view":"components/director-view/director-view.jsx","../genre-view/genre-view":"components/genre-view/genre-view.jsx","../profile-view/profile-view":"components/profile-view/profile-view.jsx"}],"reducers/reducers.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -44834,7 +44952,34 @@ function user() {
 
   switch (action.type) {
     case _actions.SET_USER:
-      return action.value.user;
+      return action.value;
+
+    default:
+      return state;
+  }
+}
+
+function updateData() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _actions.SET_UPDATEDATA:
+      return action.value;
+
+    default:
+      return state;
+  }
+}
+
+function modalData() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  console.log('dave', state, action);
+
+  switch (action.type) {
+    case _actions.SET_SHOWMODAL:
+      return action.value;
 
     default:
       return state;
@@ -44857,7 +45002,9 @@ function movies() {
 var moviesApp = (0, _redux.combineReducers)({
   user: user,
   visibilityFilter: visibilityFilter,
-  movies: movies
+  movies: movies,
+  updateData: updateData,
+  modalData: modalData
 });
 var _default = moviesApp;
 exports.default = _default;
@@ -44958,7 +45105,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54313" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56148" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

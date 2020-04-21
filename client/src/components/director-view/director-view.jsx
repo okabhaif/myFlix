@@ -19,11 +19,11 @@ export class DirectorView extends React.Component {
     return (
 
       <Container>
-        <Col lg={8} sm={12}>
+        <Col>
           <div className="director-view p-5">
 
             <div className="director-name mt-3">
-              <span className="label"> Director: </span>
+              <h1 className="label"> Director: </h1>
               <span className="value"> {director.Name} </span>
             </div>
 
@@ -63,5 +63,7 @@ DirectorView.propTypes = {
   director: PropTypes.shape({
     Name: PropTypes.string.isRequired,
     Bio: PropTypes.string.isRequired,
+    DOB: PropTypes.Date,
+    Died: PropTypes.Date
   })
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import PropTypes from 'prop-types';
 
 export class NavView extends React.Component {
 
@@ -24,3 +25,9 @@ export class NavView extends React.Component {
     )
   }
 }
+
+
+NavView.propTypes = {
+  user: PropTypes.object,
+  onLogout: PropTypes.func.isRequired
+};

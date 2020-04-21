@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -43,3 +44,14 @@ export function LoginView(props) {
     </Container >
   );
 }
+
+
+
+LoginView.propTypes = {
+  handleSubmit: PropTypes.shape({
+    handleLogin: PropTypes.func.isRequired,
+    username: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired
+
+  })
+};

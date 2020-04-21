@@ -48,5 +48,7 @@ MovieCard.propTypes = {
     Director: PropTypes.shape({
       Name: PropTypes.string.isRequired
     }),
-  })
+  }),
+  deleteMovie: PropTypes.func
+
 };

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 
 import Button from 'react-bootstrap/Button';
@@ -55,3 +55,12 @@ export function RegistrationView(props) {
     </Container>
   );
 }
+RegistrationView.propTypes = {
+  handleRegistration: PropTypes.func,
+  createNewUser: PropTypes.exact({
+    username: PropTypes.string,
+    password: PropTypes.string,
+    email: PropTypes.string,
+    DOB: PropTypes.string
+  }),
+};

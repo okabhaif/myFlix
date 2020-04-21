@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -62,3 +63,19 @@ export class MovieView extends React.Component {
     );
   }
 }
+
+
+MovieView.propTypes = {
+  movie: PropTypes.object.isRequired,
+  movie: PropTypes.shape({
+    Title: PropTypes.string.isRequired,
+    Description: PropTypes.string.isRequired,
+    ImagePath: PropTypes.string.isRequired,
+    Genre: PropTypes.shape({
+      Name: PropTypes.string.isRequired
+    }),
+    Director: PropTypes.shape({
+      Name: PropTypes.string.isRequired
+    }),
+  })
+};

@@ -1,5 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -8,23 +11,22 @@ import Col from 'react-bootstrap/Col';
 import './profile-view.scss';
 import MoviesList from '../movie-list/movie-list.jsx'
 import { UpdateUserModal } from '../update-view/update-user-modal.jsx';
+import { setUpdateData, setShowModal } from '../../actions/actions';
 
-export class ProfileView extends React.Component {
 
-  constructor() {
-    super();
-    this.state = {
-      showUpdateModal: false,
-      updateData: null
-    };
-  }
 
+class ProfileView extends React.Component {
 
   showUpdateModal(data) {
-    this.setState({
-      showUpdateModal: true,
-      updateData: data
-    })
+    console.log(data, this)
+    data.show = true;
+    this.props.setShowModal(data)
+  }
+
+  closeModal() {
+    this.props.setShowModal({
+      show: false
+    });
   }
 
   submitUpdate({
@@ -37,19 +39,9 @@ export class ProfileView extends React.Component {
     this.closeModal();
   }
 
-  closeModal() {
-    this.setState({
-      showUpdateModal: false,
-      updateData: null
-    });
-  }
-
   render() {
-    const { user, movies, deleteMovie } = this.props;
+    const { user, movies, deleteMovie, showUpdateModal } = this.props;
     const favMovies = movies.filter(movie => user.FavouriteMovies.includes(movie._id));
-
-
-    console.log(user, favMovies);
     return [
 
       <Container>
@@ -123,27 +115,45 @@ export class ProfileView extends React.Component {
           <span className="label"> {user.Username}'s Favourite Movies: </span>
           <span className="value"> <MoviesList movies={favMovies} deleteMovie={deleteMovie} /> </span>
         </div>
-        {this.state.updateData && <UpdateUserModal
-          inputType={this.state.updateData.inputType}
-          inputName={this.state.updateData.inputName}
-          inputPlaceholder={this.state.updateData.inputPlaceholder}
-          show={this.state.showUpdateModal}
+
+        {this.props.modalData && this.props.modalData.show && <UpdateUserModal
+          inputType={this.props.modalData.inputType}
+          inputName={this.props.modalData.inputName}
+          inputPlaceholder={this.props.modalData.inputPlaceholder}
+          show={this.props.setShowModal}
           onSubmit={data => this.submitUpdate(data)}
-          initial={this.state.updateData.initial}
+          initial={this.props.modalData.initial}
           closeModal={() => this.closeModal()} />}
 
 
       </Container>]
 
-
-
-
-
-
-
-
-
-
       ;
   }
 }
+let mapStateToProps = state => {
+  console.log(state);
+  return { modalData: state.modalData }
+}
+
+export default connect(mapStateToProps, { setUpdateData, setShowModal })(ProfileView);
+
+ProfileView.propTypes = {
+  showUpdateModal: PropTypes.func,
+  closeModal: PropTypes.func,
+  submitUpdate: PropTypes.func,
+  modalData: PropTypes.string,
+  user: PropTypes.object.isRequired,
+  user: PropTypes.shape({
+    _id: PropTypes.string,
+    FavouriteMovies: PropTypes.array,
+    Username: PropTypes.string,
+    Password: PropTypes.string,
+    Email: PropTypes.string,
+    DOB: PropTypes.string
+  }),
+  movie: PropTypes.array,
+  favMovies: PropTypes.func,
+  deleteMovie: PropTypes.func.isRequired
+
+};

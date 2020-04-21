@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container'
@@ -42,3 +44,12 @@ export function DeregistrationView(props) {
     </div>
   );
 }
+
+
+DeregistrationView.propTypes = {
+  handleDeregistration: PropTypes.func,
+  deleteUser: PropTypes.exact({
+    username: PropTypes.string,
+    password: PropTypes.string
+  }),
+};

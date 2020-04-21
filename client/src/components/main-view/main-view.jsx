@@ -3,6 +3,8 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { Router, Route } from "react-router-dom";
 import createBrowserHistory from 'history/createBrowserHistory';
+import PropTypes from 'prop-types';
+
 
 // #0
 import { setMovies } from '../../actions/actions';
@@ -20,29 +22,20 @@ import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
 
 
-import { ProfileView } from '../profile-view/profile-view';
+import ProfileView from '../profile-view/profile-view';
 
 
 const browserHistory = createBrowserHistory();
 
 export class MainView extends React.Component {
 
-  // constructor() {
-  //   super();
-
-  //   this.state = {
-  //     user: null,
-  //   };
-  // }
-
-  // One of the "hooks" available in a React Component
+  constructor() {
+    super();
+  }
   componentDidMount() {
     let accessToken = localStorage.getItem('token');
     if (accessToken !== null) {
-      // this.setState({
-      this.props.setUser({
-        user: JSON.parse(localStorage.getItem('user'))
-      });
+      this.props.setUser(JSON.parse(localStorage.getItem('user')));
       this.getMovies(accessToken);
     }
   }
@@ -61,9 +54,9 @@ export class MainView extends React.Component {
   }
 
   setUser(user) {
-    this.props.setUser({
+    this.props.setUser(
       user
-    });
+    );
     localStorage.setItem('user', JSON.stringify(user));
   }
 
@@ -226,5 +219,48 @@ let mapStateToProps = state => {
 // #4
 export default connect(mapStateToProps, { setMovies, setUser })(MainView);
 
+//PropTypes
+MainView.propTypes = {
+  movies: PropTypes.array.isRequired,
+  user: PropTypes.object,
+  handleLogin: PropTypes.func,
+  handleLogin: PropTypes.shape({
+    username: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired
+  }),
+  onLoggedIn: PropTypes.func,
+  onLogout: PropTypes.func,
+  deleteMovie: PropTypes.func,
+  deleteMovie: PropTypes.shape({
+    movieId: PropTypes.string.isRequired,
+    user: PropTypes.object,
+    username: PropTypes.string.isRequired
+  }),
+  deleteUser: PropTypes.func,
+  deleteUser: PropTypes.shape({
+    user: PropTypes.object,
+    username: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired
+  }),
 
-        // <Button className="logout-button mt-3" type="button" variant="dark" size="sm" onClick={this.onLogout.bind(this)}>Logout</Button>
+  createNewUser: PropTypes.func,
+  createNewUser: PropTypes.shape({
+    Username: PropTypes.string,
+    Password: PropTypes.string,
+    Email: PropTypes.string,
+    DOB: PropTypes.string
+  }),
+
+  handleUpdateUser: PropTypes.func,
+  handleUpdateUser: PropTypes.shape({
+    Username: PropTypes.string,
+    Password: PropTypes.string,
+    Email: PropTypes.string,
+    DOB: PropTypes.string
+  }),
+
+  director: PropTypes.object,
+  genre: PropTypes.object,
+  setMovies: PropTypes.func,
+  setUser: PropTypes.func
+};
