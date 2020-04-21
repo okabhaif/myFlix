@@ -23,18 +23,18 @@ export class GenreView extends React.Component {
           <div className="genre-view p-5">
 
             <div className="genre-name mt-3">
-              <span className="label"> Genre: </span>
+              <h2 className="label"> Genre:
               <span className="value"> {genre.Name} </span>
-            </div>
+              </h2>
+            </div><br />
 
             <div className="genre-description">
-              <span className="label"> Description: </span>
               <span className="value"> {genre.Description} </span>
             </div>
 
             <Link to={`/`}>
 
-              <Button variant="dark" className="nav-to-home mt-3" type="button" size="sm">Home</Button>
+              <Button variant="dark" className="nav-to-home mt-3" type="button" size="lg">Home</Button>
             </Link>
 
           </div>

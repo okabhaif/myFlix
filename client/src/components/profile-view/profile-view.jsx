@@ -45,74 +45,94 @@ class ProfileView extends React.Component {
     return [
 
       <Container>
-        <Col lg={8} sm={12}>
-          <div className="user-view p-5">
+        <Row>
+          <Col lg={8} sm={12}>
+
+            <div className="profile-view">
+              <h3 className="update-title mt-5"> Current Information:  </h3>
 
 
-            <div className="user-username mt-3">
-              <span className="label"> Username: </span>
-              <span className="value"> {user.Username} </span>
+              <div className="user-username mt-3">
+                <span className="label"> Username: </span>
+                <span className="value"> {user.Username} </span>
+              </div>
+
+
+              <div className="user-password mt-3">
+                <span className="label"> Password: </span>
+                <span className="value"> ############## </span>
+              </div>
+
+
+
+              <div className="user-title mt-3">
+                <span className="label"> Registered Email: </span>
+                <span className="value"> {user.Email} </span>
+              </div>
+
+
+              <div className="user-title mt-3 mb-3">
+                <span className="label"> DOB: </span>
+                <span className="value"> {user.DOB.substr(0, 10)} </span>
+              </div>
+
+
+
             </div>
-            <Button type="button" className="update-username" variant="dark" size="sm" onClick={() => this.showUpdateModal({
-              inputType: 'text',
-              inputName: 'username',
-              updateField: 'Username',
-              inputPlaceholder: 'Please set a new Username here',
-              initial: user.username
+          </Col>
+          <Col>
+            <div className="profile-view update">
+              <h3 className="update-title mt-5"> Update your information here:  </h3>
+              <Button type="button" className="btn-block update-username mt-3" variant="dark" size="md" onClick={() => this.showUpdateModal({
+                inputType: 'text',
+                inputName: 'username',
+                updateField: 'Username',
+                inputPlaceholder: 'Please set a new Username here',
+                initial: user.username
 
-            })}>Update Username</Button>
+              })}>Update Username</Button> <br />
 
-            <div className="user-password mt-3">
-              <span className="label"> Password: </span>
-              <span className="value"> ############## </span>
+              <Button type="button" className="update-password btn-block" variant="dark" size="md" onClick={() => this.showUpdateModal({
+                inputType: 'password',
+                inputName: 'password',
+                updateField: 'Password',
+                inputPlaceholder: 'Please set a new Password here',
+                initial: user.password
+
+              })}>Update Password</Button><br />
+
+              <Button type="button" className="update-email btn-block" variant="dark" size="md" onClick={() => this.showUpdateModal({
+                inputType: 'email',
+                inputName: 'email',
+                updateField: 'Email',
+                inputPlaceholder: 'Please set a new email here',
+                initial: user.email
+
+              })}>Update Email</Button><br />
+
+              <Button type="button" className="update-DOB btn-block" variant="dark" size="md" onClick={() => this.showUpdateModal({
+                inputType: 'date',
+                inputName: 'DOB',
+                updateField: 'DOB',
+                inputPlaceholder: 'Please update your DOB here',
+                initial: user.DOB
+
+              })}>Update DOB</Button><br />
+
+              <Link to={`/unregister`}>
+
+                <Button type="button" className="nav-to-unregister btn-block mb-3" variant="dark" size="md">Delete my account</Button>
+              </Link>
             </div>
-            <Button type="button" className="update-password" variant="dark" size="sm" onClick={() => this.showUpdateModal({
-              inputType: 'password',
-              inputName: 'password',
-              updateField: 'Password',
-              inputPlaceholder: 'Please set a new Password here',
-              initial: user.password
-
-            })}>Update Password</Button>
 
 
-            <div className="user-title mt-3">
-              <span className="label"> Registered Email: </span>
-              <span className="value"> {user.Email} </span>
-            </div>
-            <Button type="button" className="update-email" variant="dark" size="sm" onClick={() => this.showUpdateModal({
-              inputType: 'email',
-              inputName: 'email',
-              updateField: 'Email',
-              inputPlaceholder: 'Please set a new email here',
-              initial: user.email
+          </Col>
+        </Row>
 
-            })}>Update Email</Button>
-
-            <div className="user-title mt-3">
-              <span className="label"> DOB: </span>
-              <span className="value"> {user.DOB.substr(0, 10)} </span>
-            </div>
-            <Button type="button" className="update-DOB" variant="dark" size="sm" onClick={() => this.showUpdateModal({
-              inputType: 'date',
-              inputName: 'DOB',
-              updateField: 'DOB',
-              inputPlaceholder: 'Please update your DOB here',
-              initial: user.DOB
-
-            })}>Update DOB</Button>
-
-          </div>
-
-          <Link to={`/unregister`}>
-
-            <Button type="button" className="nav-to-unregister" variant="dark" size="sm">Delete my account</Button>
-          </Link>
-        </Col>
       </Container >,
       <Container>
-        <div className="favourites-list">
-          <span className="label"> {user.Username}'s Favourite Movies: </span>
+        <div className="profile-view favourites-list mt-3">
+          <h3 className="label"> {user.Username}'s Favourite Movies: </h3>
           <span className="value"> <MoviesList movies={favMovies} deleteMovie={deleteMovie} /> </span>
         </div>
 

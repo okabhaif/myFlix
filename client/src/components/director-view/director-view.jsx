@@ -23,19 +23,18 @@ export class DirectorView extends React.Component {
           <div className="director-view p-5">
 
             <div className="director-name mt-3">
-              <h1 className="label"> Director: </h1>
-              <span className="value"> {director.Name} </span>
-            </div>
+              <h1 className="value"> {director.Name} </h1>
+            </div><br />
 
             <div className="director-bio">
               <span className="label"> Biography: </span>
               <span className="value"> {director.Bio} </span>
-            </div>
+            </div>< br />
 
             <div className="director-DOB">
               <span className="label"> DOB: </span>
               <span className="value"> {director.DOB ? director.DOB.substr(0, 10) : 'Unknown!'} </span>
-            </div>
+            </div> <br />
 
             {director.Died && <div className="director-Died">
               <span className="label"> Died: </span>
@@ -44,7 +43,7 @@ export class DirectorView extends React.Component {
 
             <Link to={`/`}>
 
-              <Button variant="dark" className="nav-to-home mt-3" type="button" size="sm">Home</Button>
+              <Button variant="dark" className="nav-to-home mt-3" type="button" size="lg">Home</Button>
             </Link>
 
           </div>

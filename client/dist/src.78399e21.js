@@ -42217,48 +42217,52 @@ var MovieView = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       var movie = this.props.movie;
-      return _react.default.createElement(_Container.default, null, _react.default.createElement(_Col.default, {
-        lg: 8,
-        sm: 12
-      }, _react.default.createElement("div", {
-        className: "movie-view p-5"
+      return _react.default.createElement(_Container.default, null, _react.default.createElement(_Row.default, null, _react.default.createElement(_Col.default, {
+        lg: 6,
+        sm: 6,
+        xs: 12
       }, _react.default.createElement("img", {
-        className: "movie-poster",
+        className: "movie-poster rounded float-left mt-5",
         src: movie.ImagePath
-      }), _react.default.createElement("div", {
-        className: "movie-title mt-3"
-      }, _react.default.createElement("span", {
-        className: "label"
-      }, " Title: "), _react.default.createElement("span", {
-        className: "value"
-      }, " ", movie.Title, " ")), _react.default.createElement("div", {
+      })), _react.default.createElement(_Col.default, {
+        lg: 6,
+        sm: 6,
+        xs: 12
+      }, _react.default.createElement("div", {
+        className: "movie-view mt-3"
+      }, _react.default.createElement("div", {
+        className: "movie-title"
+      }, _react.default.createElement("h1", {
+        className: "value mt-5 mb-2"
+      }, " ", movie.Title, " ")), _react.default.createElement("br", null), _react.default.createElement("div", {
         className: "movie-description"
       }, _react.default.createElement("span", {
         className: "label"
       }, " Description: "), _react.default.createElement("span", {
         className: "value"
-      }, " ", movie.Description, " ")), _react.default.createElement("div", {
+      }, " ", movie.Description, " ")), _react.default.createElement("br", null), _react.default.createElement("div", {
         className: "movie-genre"
       }, _react.default.createElement("span", {
         className: "label"
       }, " Genre: "), _react.default.createElement("span", {
         className: "value"
-      }, " ", movie.Genre.Name, " ")), _react.default.createElement("div", {
+      }, " ", movie.Genre.Name, " ")), _react.default.createElement("br", null), _react.default.createElement("div", {
         className: "movie-director"
       }, _react.default.createElement("span", {
         className: "label"
       }, " Director: "), _react.default.createElement("span", {
         className: "value"
-      }, " ", movie.Director.Name, " ")))), _react.default.createElement(_Col.default, {
-        lg: 8,
-        sm: 12
-      }, _react.default.createElement(_Row.default, null, _react.default.createElement(_reactRouterDom.Link, {
+      }, " ", movie.Director.Name, " ")), _react.default.createElement("br", null)), _react.default.createElement(_reactRouterDom.Link, {
         to: "/directors/".concat(movie.Director.Name)
       }, _react.default.createElement(_Button.default, {
+        className: "mr-2 mt-2",
+        size: "lg",
         variant: "dark"
       }, "Director")), _react.default.createElement(_reactRouterDom.Link, {
         to: "/genres/".concat(movie.Genre.Name)
       }, _react.default.createElement(_Button.default, {
+        className: "mt-2",
+        size: "lg",
         variant: "dark"
       }, "Genre")))));
     }
@@ -42346,22 +42350,20 @@ var DirectorView = /*#__PURE__*/function (_React$Component) {
       }, _react.default.createElement("div", {
         className: "director-name mt-3"
       }, _react.default.createElement("h1", {
-        className: "label"
-      }, " Director: "), _react.default.createElement("span", {
         className: "value"
-      }, " ", director.Name, " ")), _react.default.createElement("div", {
+      }, " ", director.Name, " ")), _react.default.createElement("br", null), _react.default.createElement("div", {
         className: "director-bio"
       }, _react.default.createElement("span", {
         className: "label"
       }, " Biography: "), _react.default.createElement("span", {
         className: "value"
-      }, " ", director.Bio, " ")), _react.default.createElement("div", {
+      }, " ", director.Bio, " ")), _react.default.createElement("br", null), _react.default.createElement("div", {
         className: "director-DOB"
       }, _react.default.createElement("span", {
         className: "label"
       }, " DOB: "), _react.default.createElement("span", {
         className: "value"
-      }, " ", director.DOB ? director.DOB.substr(0, 10) : 'Unknown!', " ")), director.Died && _react.default.createElement("div", {
+      }, " ", director.DOB ? director.DOB.substr(0, 10) : 'Unknown!', " ")), " ", _react.default.createElement("br", null), director.Died && _react.default.createElement("div", {
         className: "director-Died"
       }, _react.default.createElement("span", {
         className: "label"
@@ -42373,7 +42375,7 @@ var DirectorView = /*#__PURE__*/function (_React$Component) {
         variant: "dark",
         className: "nav-to-home mt-3",
         type: "button",
-        size: "sm"
+        size: "lg"
       }, "Home")))));
     }
   }]);
@@ -42457,15 +42459,13 @@ var GenreView = /*#__PURE__*/function (_React$Component) {
         className: "genre-view p-5"
       }, _react.default.createElement("div", {
         className: "genre-name mt-3"
-      }, _react.default.createElement("span", {
+      }, _react.default.createElement("h2", {
         className: "label"
-      }, " Genre: "), _react.default.createElement("span", {
+      }, " Genre:", _react.default.createElement("span", {
         className: "value"
-      }, " ", genre.Name, " ")), _react.default.createElement("div", {
+      }, " ", genre.Name, " "))), _react.default.createElement("br", null), _react.default.createElement("div", {
         className: "genre-description"
       }, _react.default.createElement("span", {
-        className: "label"
-      }, " Description: "), _react.default.createElement("span", {
         className: "value"
       }, " ", genre.Description, " ")), _react.default.createElement(_reactRouterDom.Link, {
         to: "/"
@@ -42473,7 +42473,7 @@ var GenreView = /*#__PURE__*/function (_React$Component) {
         variant: "dark",
         className: "nav-to-home mt-3",
         type: "button",
-        size: "sm"
+        size: "lg"
       }, "Home")))));
     }
   }]);
@@ -44387,22 +44387,46 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
       var favMovies = movies.filter(function (movie) {
         return user.FavouriteMovies.includes(movie._id);
       });
-      return [_react.default.createElement(_Container.default, null, _react.default.createElement(_Col.default, {
+      return [_react.default.createElement(_Container.default, null, _react.default.createElement(_Row.default, null, _react.default.createElement(_Col.default, {
         lg: 8,
         sm: 12
       }, _react.default.createElement("div", {
-        className: "user-view p-5"
-      }, _react.default.createElement("div", {
+        className: "profile-view"
+      }, _react.default.createElement("h3", {
+        className: "update-title mt-5"
+      }, " Current Information:  "), _react.default.createElement("div", {
         className: "user-username mt-3"
       }, _react.default.createElement("span", {
         className: "label"
       }, " Username: "), _react.default.createElement("span", {
         className: "value"
-      }, " ", user.Username, " ")), _react.default.createElement(_Button.default, {
+      }, " ", user.Username, " ")), _react.default.createElement("div", {
+        className: "user-password mt-3"
+      }, _react.default.createElement("span", {
+        className: "label"
+      }, " Password: "), _react.default.createElement("span", {
+        className: "value"
+      }, " ############## ")), _react.default.createElement("div", {
+        className: "user-title mt-3"
+      }, _react.default.createElement("span", {
+        className: "label"
+      }, " Registered Email: "), _react.default.createElement("span", {
+        className: "value"
+      }, " ", user.Email, " ")), _react.default.createElement("div", {
+        className: "user-title mt-3 mb-3"
+      }, _react.default.createElement("span", {
+        className: "label"
+      }, " DOB: "), _react.default.createElement("span", {
+        className: "value"
+      }, " ", user.DOB.substr(0, 10), " ")))), _react.default.createElement(_Col.default, null, _react.default.createElement("div", {
+        className: "profile-view update"
+      }, _react.default.createElement("h3", {
+        className: "update-title mt-5"
+      }, " Update your information here:  "), _react.default.createElement(_Button.default, {
         type: "button",
-        className: "update-username",
+        className: "btn-block update-username mt-3",
         variant: "dark",
-        size: "sm",
+        size: "md",
         onClick: function onClick() {
           return _this.showUpdateModal({
             inputType: 'text',
@@ -44412,17 +44436,11 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
             initial: user.username
           });
         }
-      }, "Update Username"), _react.default.createElement("div", {
-        className: "user-password mt-3"
-      }, _react.default.createElement("span", {
-        className: "label"
-      }, " Password: "), _react.default.createElement("span", {
-        className: "value"
-      }, " ############## ")), _react.default.createElement(_Button.default, {
+      }, "Update Username"), " ", _react.default.createElement("br", null), _react.default.createElement(_Button.default, {
         type: "button",
-        className: "update-password",
+        className: "update-password btn-block",
         variant: "dark",
-        size: "sm",
+        size: "md",
         onClick: function onClick() {
           return _this.showUpdateModal({
             inputType: 'password',
@@ -44432,17 +44450,11 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
             initial: user.password
           });
         }
-      }, "Update Password"), _react.default.createElement("div", {
-        className: "user-title mt-3"
-      }, _react.default.createElement("span", {
-        className: "label"
-      }, " Registered Email: "), _react.default.createElement("span", {
-        className: "value"
-      }, " ", user.Email, " ")), _react.default.createElement(_Button.default, {
+      }, "Update Password"), _react.default.createElement("br", null), _react.default.createElement(_Button.default, {
         type: "button",
-        className: "update-email",
+        className: "update-email btn-block",
         variant: "dark",
-        size: "sm",
+        size: "md",
         onClick: function onClick() {
           return _this.showUpdateModal({
             inputType: 'email',
@@ -44452,17 +44464,11 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
             initial: user.email
           });
         }
-      }, "Update Email"), _react.default.createElement("div", {
-        className: "user-title mt-3"
-      }, _react.default.createElement("span", {
-        className: "label"
-      }, " DOB: "), _react.default.createElement("span", {
-        className: "value"
-      }, " ", user.DOB.substr(0, 10), " ")), _react.default.createElement(_Button.default, {
+      }, "Update Email"), _react.default.createElement("br", null), _react.default.createElement(_Button.default, {
         type: "button",
-        className: "update-DOB",
+        className: "update-DOB btn-block",
         variant: "dark",
-        size: "sm",
+        size: "md",
         onClick: function onClick() {
           return _this.showUpdateModal({
             inputType: 'date',
@@ -44472,16 +44478,16 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
             initial: user.DOB
           });
         }
-      }, "Update DOB")), _react.default.createElement(_reactRouterDom.Link, {
+      }, "Update DOB"), _react.default.createElement("br", null), _react.default.createElement(_reactRouterDom.Link, {
         to: "/unregister"
       }, _react.default.createElement(_Button.default, {
         type: "button",
-        className: "nav-to-unregister",
+        className: "nav-to-unregister btn-block mb-3",
         variant: "dark",
-        size: "sm"
-      }, "Delete my account")))), _react.default.createElement(_Container.default, null, _react.default.createElement("div", {
-        className: "favourites-list"
-      }, _react.default.createElement("span", {
+        size: "md"
+      }, "Delete my account")))))), _react.default.createElement(_Container.default, null, _react.default.createElement("div", {
+        className: "profile-view favourites-list mt-3"
+      }, _react.default.createElement("h3", {
         className: "label"
       }, " ", user.Username, "'s Favourite Movies: "), _react.default.createElement("span", {
         className: "value"
@@ -45105,7 +45111,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56148" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64091" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

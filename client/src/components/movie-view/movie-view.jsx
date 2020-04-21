@@ -19,44 +19,46 @@ export class MovieView extends React.Component {
     return (
 
       <Container>
-        <Col lg={8} sm={12}>
-          <div className="movie-view p-5">
-            <img className="movie-poster" src={movie.ImagePath} />
 
-            <div className="movie-title mt-3">
-              <span className="label"> Title: </span>
-              <span className="value"> {movie.Title} </span>
+        <Row>
+          <Col lg={6} sm={6} xs={12}>
+            <img className="movie-poster rounded float-left mt-5" src={movie.ImagePath} />
+          </Col>
+
+          <Col lg={6} sm={6} xs={12}>
+            <div className="movie-view mt-3">
+
+              <div className="movie-title">
+                <h1 className="value mt-5 mb-2"> {movie.Title} </h1>
+              </div><br />
+
+              <div className="movie-description">
+                <span className="label"> Description: </span>
+                <span className="value"> {movie.Description} </span>
+              </div><br />
+
+              <div className="movie-genre">
+                <span className="label"> Genre: </span>
+                <span className="value"> {movie.Genre.Name} </span>
+              </div><br />
+
+              <div className="movie-director">
+                <span className="label"> Director: </span>
+                <span className="value"> {movie.Director.Name} </span>
+              </div><br />
+
             </div>
 
-            <div className="movie-description">
-              <span className="label"> Description: </span>
-              <span className="value"> {movie.Description} </span>
-            </div>
-
-            <div className="movie-genre">
-              <span className="label"> Genre: </span>
-              <span className="value"> {movie.Genre.Name} </span>
-            </div>
-
-            <div className="movie-director">
-              <span className="label"> Director: </span>
-              <span className="value"> {movie.Director.Name} </span>
-            </div>
-
-          </div>
-
-        </Col>
-        <Col lg={8} sm={12}>
-          <Row>
             <Link to={`/directors/${movie.Director.Name}`}>
-              <Button variant="dark">Director</Button>
+              <Button className="mr-2 mt-2" size="lg" variant="dark">Director</Button>
             </Link>
 
             <Link to={`/genres/${movie.Genre.Name}`}>
-              <Button variant="dark">Genre</Button>
+              <Button className="mt-2" size="lg" variant="dark">Genre</Button>
             </Link>
-          </Row>
-        </Col>
+          </Col>
+
+        </Row>
       </Container>
 
 
