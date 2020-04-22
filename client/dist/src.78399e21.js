@@ -44783,7 +44783,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       if (!movies) return _react.default.createElement("div", {
         className: "main-view"
       });
-      return _react.default.createElement(_reactRouterDom.Router, {
+      return _react.default.createElement(_reactRouterDom.BrowserRouter, {
         basename: "/client",
         history: browserHistory
       }, _react.default.createElement(_navView.NavView, {
@@ -45112,7 +45112,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54318" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54844" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

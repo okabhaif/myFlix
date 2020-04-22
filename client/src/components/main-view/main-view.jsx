@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { Router, Route } from "react-router-dom";
+import { Route, BrowserRouter } from "react-router-dom";
 import createBrowserHistory from 'history/createBrowserHistory';
 import PropTypes from 'prop-types';
 
@@ -175,7 +175,7 @@ export class MainView extends React.Component {
     if (!movies) return <div className="main-view" />;
 
     return (
-      <Router basename="/client" history={browserHistory}>
+      <BrowserRouter basename="/client" history={browserHistory}>
         <NavView onLogout={this.onLogout.bind(this)} user={user} />
         <div className="main-view">
           <Route exact path="/" render={() => {
@@ -206,7 +206,7 @@ export class MainView extends React.Component {
           }} />
 
         </div>
-      </Router>
+      </BrowserRouter>
     );
   }
 }
