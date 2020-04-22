@@ -44621,7 +44621,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 var browserHistory = (0, _createBrowserHistory.default)();
-var baseName = undefined || "/";
+var baseName = location.host === "localhost:1234" ? "/" : "/client";
 
 var MainView = /*#__PURE__*/function (_React$Component) {
   _inherits(MainView, _React$Component);
@@ -45129,7 +45129,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58209" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58766" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

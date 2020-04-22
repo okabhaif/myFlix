@@ -26,7 +26,7 @@ import ProfileView from '../profile-view/profile-view';
 
 
 const browserHistory = createBrowserHistory();
-const baseName = process.env.BASE_NAME || "/";
+const baseName = location.host === "localhost:1234" ? "/" : "/client";
 export class MainView extends React.Component {
 
   constructor() {
