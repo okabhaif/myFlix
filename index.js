@@ -32,8 +32,22 @@ app.use(cors({
 }));
 
 app.use(bodyParser.json());
+
 var auth = require('./auth')(app);
+
 app.use(morgan('common'));
+
+app.use(express.static('public'));
+app.use("/client", express.static(path.join(__dirname, "client", "dist")));
+
+app.get("/client/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
+
+app.use(function (err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
 
 //introductory message on opening API with no url endpoint specified
 app.get('/', function (req, res, next) {
@@ -276,17 +290,7 @@ app.delete('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', { se
 });
 
 //documentation
-app.use(express.static('public'));
-app.use("/client", express.static(path.join(__dirname, "client", "dist")));
 
-app.get("/client/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
-});
-
-app.use(function (err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
 
 var port = process.env.PORT || 3000;
 app.listen(port, "0.0.0.0", function () {
