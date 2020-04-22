@@ -1,6 +1,10 @@
 import React from 'react';
+import { Link } from "react-router-dom";
+
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import Button from 'react-bootstrap/Button';
+
 import PropTypes from 'prop-types';
 
 export class NavView extends React.Component {
@@ -14,11 +18,18 @@ export class NavView extends React.Component {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            {user && <Nav.Link href={`/`}>Movies</Nav.Link>}
+            {user && <Link to={`/`}>
+              <Button className="mr-2 mt-2" size="sm" variant="dark">Movies</Button>
 
-            {user && <Nav.Link href={`/profile`}>My Profile</Nav.Link>}
+            </Link>}
+            {user && <Link to={`/profile`}>
+              <Button className="mr-2 mt-2" size="sm" variant="dark">Profile</Button>
 
-            {user && <Nav.Link onClick={this.props.onLogout}>Logout</Nav.Link>}
+            </Link>}
+
+            {user && <Link onClick={this.props.onLogout}>
+              <Button className="mr-2 mt-2" size="sm" variant="dark">Logout</Button>
+            </Link>}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
