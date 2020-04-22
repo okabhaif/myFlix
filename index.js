@@ -18,9 +18,6 @@ mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnified
 var allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'https://myflix-project.herokuapp.com/'];
 
 //middleware.
-app.use(bodyParser.json());
-var auth = require('./auth')(app);
-app.use(morgan('common'));
 app.use(cors({
   origin: function (origin, callback) {
     console.log(origin);
@@ -32,6 +29,10 @@ app.use(cors({
     return callback(null, true);
   }
 }));
+
+app.use(bodyParser.json());
+var auth = require('./auth')(app);
+app.use(morgan('common'));
 
 //introductory message on opening API with no url endpoint specified
 app.get('/', function (req, res, next) {
