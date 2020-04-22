@@ -1,4 +1,5 @@
 
+const path = require("path");
 const express = require('express');
 const app = express();
 morgan = require('morgan');
@@ -276,6 +277,11 @@ app.delete('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', { se
 
 //documentation
 app.use(express.static('public'));
+app.use("/client", express.static(path.join(__dirname, "client", "dist")));
+
+app.get("/client/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
 
 app.use(function (err, req, res, next) {
   console.error(err.stack);

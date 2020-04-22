@@ -70,7 +70,7 @@ export class MainView extends React.Component {
       .then(response => {
         const data = response.data;
         console.log(data);
-        window.open('/', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
+        window.open('/client', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
 
       })
       .catch(e => {
@@ -121,7 +121,7 @@ export class MainView extends React.Component {
         alert('{user.Username} has been successfully deleted!')
         localStorage.removeItem('token');
         localStorage.removeItem('user');
-        window.open('/', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
+        window.open('/client', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
 
       })
       .catch(e => {
@@ -163,7 +163,7 @@ export class MainView extends React.Component {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
 
-    window.open('/', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
+    window.open('/client', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
 
   }
 
@@ -175,7 +175,7 @@ export class MainView extends React.Component {
     if (!movies) return <div className="main-view" />;
 
     return (
-      <Router history={browserHistory}>
+      <Router basename="/client" history={browserHistory}>
         <NavView onLogout={this.onLogout.bind(this)} user={user} />
         <div className="main-view">
           <Route exact path="/" render={() => {

@@ -44662,7 +44662,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       }).then(function (response) {
         var data = response.data;
         console.log(data);
-        window.open('/', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
+        window.open('/client', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
       }).catch(function (e) {
         console.log('error registering the user', e);
       });
@@ -44720,7 +44720,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         alert('{user.Username} has been successfully deleted!');
         localStorage.removeItem('token');
         localStorage.removeItem('user');
-        window.open('/', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
+        window.open('/client', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
       }).catch(function (e) {
         console.error('error de-registering the user');
       });
@@ -44768,7 +44768,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       });
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      window.open('/', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
+      window.open('/client', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
     }
   }, {
     key: "render",
@@ -44784,6 +44784,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         className: "main-view"
       });
       return _react.default.createElement(_reactRouterDom.Router, {
+        basename: "/client",
         history: browserHistory
       }, _react.default.createElement(_navView.NavView, {
         onLogout: this.onLogout.bind(this),
@@ -45111,7 +45112,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53686" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54318" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
