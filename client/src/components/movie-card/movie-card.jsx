@@ -13,7 +13,7 @@ export class MovieCard extends React.Component {
   }
 
   render() {
-    const { movie, deleteMovie } = this.props;
+    const { movie, deleteMovie, toggleFavourite } = this.props;
     return (
 
       <div className="movie-card-container">
@@ -23,6 +23,8 @@ export class MovieCard extends React.Component {
             <Card.Title>{movie.Title}</Card.Title>
             <div className="text-card-styling"></div>
             <Card.Text className="card-text">{movie.Description}</Card.Text>
+            {!movie.favourite && <Button type="button" variant="dark" size="sm" block onClick={() => toggleFavourite(movie._id)}>Add to favourites</Button>}
+
             <Link to={`/movies/${movie._id}`}>
 
               <Button type="button" variant="dark" size="sm" block>Find out more</Button>

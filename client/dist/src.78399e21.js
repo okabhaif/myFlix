@@ -42048,7 +42048,8 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this$props = this.props,
           movie = _this$props.movie,
-          deleteMovie = _this$props.deleteMovie;
+          deleteMovie = _this$props.deleteMovie,
+          toggleFavourite = _this$props.toggleFavourite;
       return _react.default.createElement("div", {
         className: "movie-card-container"
       }, _react.default.createElement(_Card.default, {
@@ -42064,7 +42065,15 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
         className: "text-card-styling"
       }), _react.default.createElement(_Card.default.Text, {
         className: "card-text"
-      }, movie.Description), _react.default.createElement(_reactRouterDom.Link, {
+      }, movie.Description), !movie.favourite && _react.default.createElement(_Button.default, {
+        type: "button",
+        variant: "dark",
+        size: "sm",
+        block: true,
+        onClick: function onClick() {
+          return toggleFavourite(movie._id);
+        }
+      }, "Add to favourites"), _react.default.createElement(_reactRouterDom.Link, {
         to: "/movies/".concat(movie._id)
       }, _react.default.createElement(_Button.default, {
         type: "button",
@@ -42134,7 +42143,8 @@ var mapStateToProps = function mapStateToProps(state) {
 function MoviesList(props) {
   var movies = props.movies,
       visibilityFilter = props.visibilityFilter,
-      deleteMovie = props.deleteMovie;
+      deleteMovie = props.deleteMovie,
+      toggleFavourite = props.toggleFavourite;
   var filteredMovies = movies;
 
   if (visibilityFilter !== '') {
@@ -42161,7 +42171,8 @@ function MoviesList(props) {
     }, _react.default.createElement(_movieCard.MovieCard, {
       key: movie._id,
       movie: movie,
-      deleteMovie: deleteMovie
+      deleteMovie: deleteMovie,
+      toggleFavourite: toggleFavourite
     }));
   }))));
 }
@@ -44652,10 +44663,47 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           Authorization: "Bearer ".concat(this.getToken())
         }
       }).then(function (response) {
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = response.data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var movie = _step.value;
+            movie.favourite = _this.props.user.FavouriteMovies.includes(movie._id);
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return != null) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+
         _this.props.setMovies(response.data);
       }).catch(function (error) {
         console.log(error);
       });
+    }
+  }, {
+    key: "toggleFavourite",
+    value: function toggleFavourite(movieId) {
+      if (this.props.user.FavouriteMovies.includes(movieId)) {
+        return this.deleteMovie(movieId).then(function () {
+          return window.location.reload(false);
+        });
+      } else {
+        return this.addFavouriteMovie(movieId).then(function () {
+          return window.location.reload(false);
+        });
+      }
     }
   }, {
     key: "setUser",
@@ -44712,16 +44760,31 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       this.getMovies(authData.token);
     }
   }, {
-    key: "deleteMovie",
-    value: function deleteMovie(movieId) {
+    key: "addFavouriteMovie",
+    value: function addFavouriteMovie(movieId) {
       var _this3 = this;
 
-      _axios.default.delete('https://myflix-project.herokuapp.com/users/' + this.props.user.Username + '/movies/' + movieId, {
+      return _axios.default.post('https://myflix-project.herokuapp.com/users/' + this.props.user.Username + '/movies/' + movieId, {}, {
         headers: {
           Authorization: "Bearer ".concat(this.getToken())
         }
       }).then(function (response) {
         _this3.setUser(response.data);
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+  }, {
+    key: "deleteMovie",
+    value: function deleteMovie(movieId) {
+      var _this4 = this;
+
+      return _axios.default.delete('https://myflix-project.herokuapp.com/users/' + this.props.user.Username + '/movies/' + movieId, {
+        headers: {
+          Authorization: "Bearer ".concat(this.getToken())
+        }
+      }).then(function (response) {
+        _this4.setUser(response.data);
       }).catch(function (error) {
         console.log(error);
       });
@@ -44745,7 +44808,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleUpdateUser",
     value: function handleUpdateUser(_ref3) {
-      var _this4 = this;
+      var _this5 = this;
 
       var username = _ref3.username,
           password = _ref3.password,
@@ -44762,10 +44825,10 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           Authorization: "Bearer ".concat(this.getToken())
         }
       }).then(function (response) {
-        _this4.setUser(response.data); // console.log(data);
+        _this5.setUser(response.data); // console.log(data);
 
 
-        browserHistory.push("/profile");
+        window.location.reload(false);
       }).catch(function (e) {
         console.error('error registering the user', e);
       });
@@ -44790,7 +44853,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
+      var _this6 = this;
 
       // #2
       var _this$props = this.props,
@@ -44814,11 +44877,14 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         render: function render() {
           if (!user) return _react.default.createElement(_loginView.LoginView, {
             handleLogin: function handleLogin(user) {
-              return _this5.handleLogin(user);
+              return _this6.handleLogin(user);
             }
           });
           return _react.default.createElement(_movieList.default, {
-            movies: movies
+            movies: movies,
+            toggleFavourite: function toggleFavourite(movieId) {
+              return _this6.toggleFavourite(movieId);
+            }
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
@@ -44826,7 +44892,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         render: function render() {
           return _react.default.createElement(_registrationView.RegistrationView, {
             createNewUser: function createNewUser(user) {
-              return _this5.createNewUser(user);
+              return _this6.createNewUser(user);
             }
           });
         }
@@ -44835,7 +44901,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         render: function render() {
           return _react.default.createElement(_deregisterationView.DeregistrationView, {
             deleteUser: function deleteUser(user) {
-              return _this5.deleteUser(user);
+              return _this6.deleteUser(user);
             }
           });
         }
@@ -44852,9 +44918,9 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           return _react.default.createElement(_profileView.default, {
             user: user,
             movies: movies,
-            deleteMovie: _this5.deleteMovie.bind(_this5),
+            deleteMovie: _this6.deleteMovie.bind(_this6),
             handleUpdateUser: function handleUpdateUser(user) {
-              return _this5.handleUpdateUser(user);
+              return _this6.handleUpdateUser(user);
             }
           });
         }
@@ -45129,7 +45195,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58221" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52686" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

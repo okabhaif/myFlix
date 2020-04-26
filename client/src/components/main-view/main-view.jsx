@@ -45,12 +45,24 @@ export class MainView extends React.Component {
       headers: { Authorization: `Bearer ${this.getToken()}` }
     })
       .then(response => {
+        for (const movie of response.data) {
+          movie.favourite = this.props.user.FavouriteMovies.includes(movie._id);
+        }
         this.props.setMovies(response.data);
 
       })
       .catch(function (error) {
         console.log(error);
       });
+  }
+
+  toggleFavourite(movieId) {
+    if (this.props.user.FavouriteMovies.includes(movieId)) {
+      return this.deleteMovie(movieId).then(() => window.location.reload(false));
+    }
+    else {
+      return this.addFavouriteMovie(movieId).then(() => window.location.reload(false));
+    }
   }
 
   setUser(user) {
@@ -101,8 +113,20 @@ export class MainView extends React.Component {
 
   }
 
+  addFavouriteMovie(movieId) {
+    return axios.post('https://myflix-project.herokuapp.com/users/' + this.props.user.Username + '/movies/' + movieId, {}, {
+      headers: { Authorization: `Bearer ${this.getToken()}` }
+    })
+      .then(response => {
+        this.setUser(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   deleteMovie(movieId) {
-    axios.delete('https://myflix-project.herokuapp.com/users/' + this.props.user.Username + '/movies/' + movieId, {
+    return axios.delete('https://myflix-project.herokuapp.com/users/' + this.props.user.Username + '/movies/' + movieId, {
       headers: { Authorization: `Bearer ${this.getToken()}` }
     })
       .then(response => {
@@ -141,7 +165,7 @@ export class MainView extends React.Component {
       .then(response => {
         this.setUser(response.data);
         // console.log(data);
-        browserHistory.push(`/profile`);
+        window.location.reload(false);
       })
       .catch(e => {
         console.error('error registering the user', e)
@@ -180,7 +204,7 @@ export class MainView extends React.Component {
         <div className="main-view">
           <Route exact path="/" render={() => {
             if (!user) return <LoginView handleLogin={user => this.handleLogin(user)} />;
-            return <MoviesList movies={movies} />
+            return <MoviesList movies={movies} toggleFavourite={movieId => this.toggleFavourite(movieId)} />
           }} />
           <Route path="/register" render={() => <RegistrationView createNewUser={user => this.createNewUser(user)} />} />
           <Route path="/unregister" render={() => <DeregistrationView deleteUser={user => this.deleteUser(user)} />} />
