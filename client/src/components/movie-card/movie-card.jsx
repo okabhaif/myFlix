@@ -27,7 +27,7 @@ export class MovieCard extends React.Component {
 
             <Link to={`/movies/${movie._id}`}>
 
-              <Button type="button" variant="dark" size="sm" block>Find out more</Button>
+              <Button type="button" variant="dark" size="sm" className="mt-2" block>Find out more</Button>
             </Link>
             {deleteMovie && <Button type="button" className="mt-2" variant="dark" size="sm" block onClick={this.delete.bind(this)}>Delete</Button>}
           </Card.Body>

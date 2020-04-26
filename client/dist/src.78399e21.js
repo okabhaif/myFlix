@@ -42079,6 +42079,7 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
         type: "button",
         variant: "dark",
         size: "sm",
+        className: "mt-2",
         block: true
       }, "Find out more")), deleteMovie && _react.default.createElement(_Button.default, {
         type: "button",
