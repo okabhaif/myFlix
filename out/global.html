@@ -1,0 +1,1705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Global</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Global</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2></h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="DELETE/%5Busers%5D/%5B:username%5D"><span class="type-signature"></span>DELETE/[users]/[:username]<span class="signature">(username)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Endpoint - unregister / delete account - an authenticated user can delete their account using a delete request.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>username</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line409">line 409</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>axios.delete('https://myflix-project.herokuapp.com/users/JohnDoe123')Expected outcome: "User: JohnDoe123 was deleted."</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="DELETE/%5Busers%5D/%5B:username%5D/%5Bmovies%5D/%5B:movie_id%5D"><span class="type-signature"></span>DELETE/[users]/[:username]/[movies]/[:movie_id]<span class="signature">(username, MovieID)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Endpoint- add movie to user's favourites list using a post request.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>username</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>MovieID</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line470">line 470</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>axios.delete('https://myflix-project.herokuapp.com/users/823762/favourite_movies/The%20Beach')Expected outcome: "This movie: "The Beach" has been deleted."</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="GET/"><span class="type-signature"></span>GET/<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Endpoint - / - provides users with an introductory message on opening API.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line53">line 53</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    'Welcome to my movie API!'
+</div>
+
+
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>axios.get('https://myflix-project.herokuapp.com/')</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="GET/%5Bmovies%5D"><span class="type-signature"></span>GET/[movies]<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Endpoint - Get all movies (e.g.'/movies').
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line64">line 64</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>axios.get('https://myflix-project.herokuapp.com/movies')Example return: based on endpoint /movies        [ {  movie_id : 126385,  title : 'The Beach',  description: '...information about movie..',  genres: 'Adventure, Drama, Romance, Thriller',  director: {   'Name' : 'Danny Boyle'   'Bio' : '...information about director..',   'DOB' : '1956-10-20'  },  image :  'imageURL', }, {  movie_id : 236745,  title : 'V for Vendetta',  description : '...information about movie..',  genre : {   'Name' : 'Adventure';   'Description': 'information about genre....'   },  director: {   'Name' : 'James McTeigue'   'Bio' : '...information about director..',   'DOB' : '1967-12-29'   },  image : 'imageURL' },];</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="GET/%5Bmovies%5D/%5BComedy%5D"><span class="type-signature"></span>GET/[movies]/[Comedy]<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Endpoint - gets a movie genre descripton by searching a genre name (e.g.'/movies/:genre').
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line145">line 145</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>axios.get('https://myflix-project.herokuapp.com/movies/Comedy')Example return: based on endpoint /movies        { Name : 'Comedy'; Description: '...information about the genre.'}</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="GET/%5Bmovies%5D/%5BComedy%5D"><span class="type-signature"></span>GET/[movies]/[Comedy]<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Endpoint - gets information about a director by searching a genre name (e.g.'/movies/:genre').
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line170">line 170</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>axios.get('https://myflix-project.herokuapp.com/movies/Comedy')Example return: based on endpoint /movies        { Name : 'Guilliermo Del Toro'; DOB : '9 October 1964', Bio : '...information about director..',}</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="GET/%5Bmovies%5D/%5BVforVendetta%5D"><span class="type-signature"></span>GET/[movies]/[VforVendetta]<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Endpoint - Get movie by title (e.g.'/movies/:title').
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line109">line 109</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>axios.get('https://myflix-project.herokuapp.com/movies/VforVendetta')Example return: based on endpoint /movies        { movie_id : 236745, title : 'V for Vendetta', description : '...information about movie..', genre : {  'Name' : 'Adventure';  'Description': 'information about genre....'  }, director: {  'Name' : 'James McTeigue'  'Bio' : '...information about director..',  'DOB' : '1967-12-29'  }, image : 'imageURL'},</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="GET/%5Busers%5D"><span class="type-signature"></span>GET/[users]<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Endpoint - get all users (e.g.'/users').
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line197">line 197</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>axios.get('https://myflix-project.herokuapp.com/users')Example return: based on endpoint /users      [ {   id : '823762',   Username : 'JohnDoe123',   Name: 'John Doe',   DOB : '12/12/12',   Password :'JohnDoe123',   Email : 'JohnDoe123@johndoe.com',   FavouriteMovies: [...] }, {   id : '888833242',   Username : 'JaneDoe123',   Name: 'Jane Doe',   DOB : '12/12/12',   Password :'JaneDoe123',   Email : 'JaneDoe123@janedoe.com',   FavouriteMovies: [...] },]</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="GET/%5Busers%5D/%5B:username%5D"><span class="type-signature"></span>GET/[users]/[:username]<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Endpoint - get a user by username (e.g.'/users/JohnDoe123').
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line234">line 234</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>axios.get('https://myflix-project.herokuapp.com/users/JohnDoe123')Example return: based on endpoint /users      {  id : '823762',  Username : 'JohnDoe123',  Name : 'John Doe',  DOB : '12/12/12',  Password :'JohnDoe123',  Email : 'JohnDoe123@johndoe.com',  FavouriteMovies: [...]}</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="POST/%5Busers%5D/%5B:username%5D/%5Bmovies%5D/%5B:movie_id%5D"><span class="type-signature"></span>POST/[users]/[:username]/[movies]/[:movie_id]<span class="signature">(username, MovieID)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Endpoint- add movie to user's favourites list using a post request.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>username</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>MovieID</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line439">line 439</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>axios.post('https://myflix-project.herokuapp.com/users/823762/favourite_movies/The%20Beach')Expected outcome: "This Movie: "The Beach" has been added to your list of favourites!!"</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="POST/%5Busers%5D/%5BJSON%3Cobject%3E%5D"><span class="type-signature"></span>POST/[users]/[JSON<object>]<span class="signature">(username, password, email, birthday)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Endpoint - add a new user to the database
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>username</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>password</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>email</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">email</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>birthday</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">date</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line264">line 264</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>POST user object example:   { Username : 'JohnDoe123', DOB : '12/12/12', Password :'JohnDoe123', Email : 'JohnDoe123@johndoe.com', FavouriteMovies: [...]}example response:  {  id : '823762',   Username : 'JohnDoe123',  Name: 'John Doe',  DOB : '12/12/12',  Password :'JohnDoe123',  Email : 'JohnDoe123@johndoe.com',  FavouriteMovies: [...]}</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="PUT/%5Busers%5D/%5BJSON%3Cobject%3E%5D"><span class="type-signature"></span>PUT/[users]/[JSON<object>]<span class="signature">(username, password, email, birthday)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    A user can update as many fields as they want at a time, however they cannot change their unique id number.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>username</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>password</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>email</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">email</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>birthday</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">date</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line327">line 327</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>initial user object example:  User: { id : '823762' Username : 'JohnDoe123', DOB : '12/12/12', Password :'JohnDoe123', Email : 'JohnDoe123@johndoe.com', FavouriteMovies: [...]}PUT REQUEST: (user is updating their username + email){  'Username' : 'JaneDoe123',  'Email' : 'janedoe@janedoe.com'}example of expected outcome:  {  id : '823762',   Username : 'JaneDoe123',  Name: 'John Doe',  DOB : '12/12/12',  Password :'JohnDoe123',  Email : 'janedoe@janedoe.com',  FavouriteMovies: [...]}</code></pre>
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#DELETE/%255Busers%255D/%255B:username%255D">DELETE/[users]/[:username]</a></li><li><a href="global.html#DELETE/%255Busers%255D/%255B:username%255D/%255Bmovies%255D/%255B:movie_id%255D">DELETE/[users]/[:username]/[movies]/[:movie_id]</a></li><li><a href="global.html#GET/">GET/</a></li><li><a href="global.html#GET/%255Bmovies%255D">GET/[movies]</a></li><li><a href="global.html#GET/%255Bmovies%255D/%255BComedy%255D">GET/[movies]/[Comedy]</a></li><li><a href="global.html#GET/%255Bmovies%255D/%255BVforVendetta%255D">GET/[movies]/[VforVendetta]</a></li><li><a href="global.html#GET/%255Busers%255D">GET/[users]</a></li><li><a href="global.html#GET/%255Busers%255D/%255B:username%255D">GET/[users]/[:username]</a></li><li><a href="global.html#POST/%255Busers%255D/%255B:username%255D/%255Bmovies%255D/%255B:movie_id%255D">POST/[users]/[:username]/[movies]/[:movie_id]</a></li><li><a href="global.html#POST/%255Busers%255D/%255BJSON%253Cobject%253E%255D">POST/[users]/[JSON<object>]</a></li><li><a href="global.html#PUT/%255Busers%255D/%255BJSON%253Cobject%253E%255D">PUT/[users]/[JSON<object>]</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.5</a> on Wed Sep 02 2020 20:06:54 GMT+0100 (British Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

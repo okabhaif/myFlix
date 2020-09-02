@@ -16,7 +16,7 @@ const { check, validationResult } = require('express-validator');
 
 //mongoose.connect('mongodb://localhost:27017/myFlixDb', { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-var allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'https://myflix-project.herokuapp.com'];
+let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'https://myflix-project.herokuapp.com'];
 
 //middleware.
 app.use(cors({
@@ -33,7 +33,7 @@ app.use(cors({
 
 app.use(bodyParser.json());
 
-var auth = require('./auth')(app);
+const auth = require('./auth')(app);
 
 app.use(morgan('common'));
 
@@ -49,13 +49,53 @@ app.use(function (err, req, res, next) {
   res.status(500).send('Something broke!');
 });
 
-//introductory message on opening API with no url endpoint specified
+
+/**
+*@description Endpoint - / - provides users with an introductory message on opening API.
+*@method GET/
+*@example axios.get('https://myflix-project.herokuapp.com/')
+*@return 'Welcome to my movie API!'
+*/
 app.get('/', function (req, res, next) {
   res.send('Welcome to my movie API!');
   next();
 });
 
-//MOVIES --- gets all movies
+/**
+*@description Endpoint - Get all movies (e.g.'/movies').
+*@method GET/[movies]
+*@example axios.get('https://myflix-project.herokuapp.com/movies')
+*Example return: based on endpoint /movies        
+* [
+*  {
+*   movie_id : 126385,
+*   title : 'The Beach',
+*   description: '...information about movie..',
+*   genres: 'Adventure, Drama, Romance, Thriller',
+*   director: {
+*    'Name' : 'Danny Boyle'
+*    'Bio' : '...information about director..',
+*    'DOB' : '1956-10-20'
+*   },
+*   image :  'imageURL',
+*  },
+*  {
+*   movie_id : 236745,
+*   title : 'V for Vendetta',
+*   description : '...information about movie..',
+*   genre : {
+*    'Name' : 'Adventure';
+*    'Description': 'information about genre....'
+*    },
+*   director: {
+*    'Name' : 'James McTeigue'
+*    'Bio' : '...information about director..',
+*    'DOB' : '1967-12-29'
+*    },
+*   image : 'imageURL'
+*  },
+* ];
+*/
 app.get("/movies", passport.authenticate('jwt', { session: false }), function (req, res) {
   Movies.find()
     .then(function (movies) {
@@ -66,7 +106,27 @@ app.get("/movies", passport.authenticate('jwt', { session: false }), function (r
     });
 });
 
-//gets a specific movie's information by searching its title name
+/**
+*@description Endpoint - Get movie by title (e.g.'/movies/:title').
+*@method GET/[movies]/[VforVendetta]
+*@example axios.get('https://myflix-project.herokuapp.com/movies/VforVendetta')
+* Example return: based on endpoint /movies        
+* {
+*  movie_id : 236745,
+*  title : 'V for Vendetta',
+*  description : '...information about movie..',
+*  genre : {
+*   'Name' : 'Adventure';
+*   'Description': 'information about genre....'
+*   },
+*  director: {
+*   'Name' : 'James McTeigue'
+*   'Bio' : '...information about director..',
+*   'DOB' : '1967-12-29'
+*   },
+*  image : 'imageURL'
+* },
+*/
 app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), function (req, res) {
   Movies.findOne({ Title: req.params.Title })
     .then(function (movie) {
@@ -81,8 +141,17 @@ app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), func
       res.status(500).send("Error: " + err);
     });
 });
-//gets a movie genre descripton by searching a genre name
-//https://docs.mongodb.com/manual/tutorial/query-embedded-documents/
+
+/**
+*@description Endpoint - gets a movie genre descripton by searching a genre name (e.g.'/movies/:genre').
+*@method GET/[movies]/[Comedy]
+*@example axios.get('https://myflix-project.herokuapp.com/movies/Comedy')
+* Example return: based on endpoint /movies        
+* {
+*  Name : 'Comedy';
+*  Description: '...information about the genre.'
+* }
+*/
 app.get('/movies/genres/:Name', passport.authenticate('jwt', { session: false }), function (req, res) {
   Movies.findOne({ 'Genre.Name': req.params.Name })
     .then(function (genre) {
@@ -98,7 +167,17 @@ app.get('/movies/genres/:Name', passport.authenticate('jwt', { session: false })
     });
 });
 
-//gets basic info about a director upon searching their name
+/**
+*@description Endpoint - gets information about a director by searching a genre name (e.g.'/movies/:genre').
+*@method GET/[movies]/[Comedy]
+*@example axios.get('https://myflix-project.herokuapp.com/movies/Comedy')
+* Example return: based on endpoint /movies        
+* {
+*  Name : 'Guilliermo Del Toro';
+*  DOB : '9 October 1964',
+*  Bio : '...information about director..',
+* }
+*/
 app.get('/movies/directors/:Name', passport.authenticate('jwt', { session: false }), function (req, res) {
   Movies.findOne({ 'Director.Name': req.params.Name })
     .then(function (director) {
@@ -115,8 +194,33 @@ app.get('/movies/directors/:Name', passport.authenticate('jwt', { session: false
 });
 
 //USERS --- get all users
+/**
+*@description Endpoint - get all users (e.g.'/users').
+*@method GET/[users]
+*@example axios.get('https://myflix-project.herokuapp.com/users')
+* Example return: based on endpoint /users      
+* [
+*  {
+*    id : '823762',
+*    Username : 'JohnDoe123',
+*    Name: 'John Doe',
+*    DOB : '12/12/12',
+*    Password :'JohnDoe123',
+*    Email : 'JohnDoe123@johndoe.com',
+*    FavouriteMovies: [...]
+*  },
+*  {
+*    id : '888833242',
+*    Username : 'JaneDoe123',
+*    Name: 'Jane Doe',
+*    DOB : '12/12/12',
+*    Password :'JaneDoe123',
+*    Email : 'JaneDoe123@janedoe.com',
+*    FavouriteMovies: [...]
+*  },
+* ]
+*/
 app.get('/users', passport.authenticate('jwt', { session: false }), function (req, res) {
-
   Users.find()
     .then(function (users) {
       res.status(200).json(users)
@@ -127,7 +231,21 @@ app.get('/users', passport.authenticate('jwt', { session: false }), function (re
     });
 });
 
-//gets a user by username
+/**
+*@description Endpoint - get a user by username (e.g.'/users/JohnDoe123').
+*@method GET/[users]/[:username]
+*@example axios.get('https://myflix-project.herokuapp.com/users/JohnDoe123')
+* Example return: based on endpoint /users      
+* {
+*   id : '823762',
+*   Username : 'JohnDoe123',
+*   Name : 'John Doe',
+*   DOB : '12/12/12',
+*   Password :'JohnDoe123',
+*   Email : 'JohnDoe123@johndoe.com',
+*   FavouriteMovies: [...]
+* }
+*/
 app.get('/users/:Username', passport.authenticate('jwt', { session: false }), function (req, res) {
   Users.findOne({ Username: req.params.Username })
     .then(function (user) {
@@ -143,7 +261,33 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), fu
     });
 });
 
-//add new user - required fields = username, password, email and Birthday
+/**
+* Required fields: 
+*@param {string|number} username
+*@param {string|number} password
+*@param {email} email
+*@param {date} birthday
+*@description Endpoint - add a new user to the database
+*@method POST/[users]/[JSON<object>]
+*@example POST user object example:   
+* {
+*  Username : 'JohnDoe123',
+*  DOB : '12/12/12',
+*  Password :'JohnDoe123',
+*  Email : 'JohnDoe123@johndoe.com',
+*  FavouriteMovies: [...]
+* }
+* example response:  
+* {
+*   id : '823762', 
+*   Username : 'JohnDoe123',
+*   Name: 'John Doe',
+*   DOB : '12/12/12',
+*   Password :'JohnDoe123',
+*   Email : 'JohnDoe123@johndoe.com',
+*   FavouriteMovies: [...]
+* }
+*/
 app.post('/users',
   [check('Username', 'Username requires at least 8 characters.').isLength({ min: 8 }),
   check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
@@ -180,7 +324,43 @@ app.post('/users',
       });
   });
 
-//allows user to update their information
+/**
+*Updatable fields:
+*@param {string|number} username
+*@param {string|number} password
+*@param {email} email
+*@param {date} birthday
+*@description Endpoint - update user information (after being authenticated) by using a put request. 
+*@description A user can update as many fields as they want at a time, however they cannot change their unique id number.
+*@method PUT/[users]/[JSON<object>]
+*@example initial user object example:  
+* User: 
+* {
+*  id : '823762'
+*  Username : 'JohnDoe123',
+*  DOB : '12/12/12',
+*  Password :'JohnDoe123',
+*  Email : 'JohnDoe123@johndoe.com',
+*  FavouriteMovies: [...]
+* }
+*
+* PUT REQUEST: (user is updating their username + email)
+* {
+*   'Username' : 'JaneDoe123',
+*   'Email' : 'janedoe@janedoe.com'
+* }
+*
+* example of expected outcome:  
+* {
+*   id : '823762', 
+*   Username : 'JaneDoe123',
+*   Name: 'John Doe',
+*   DOB : '12/12/12',
+*   Password :'JohnDoe123',
+*   Email : 'janedoe@janedoe.com',
+*   FavouriteMovies: [...]
+* }
+*/
 app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
 
   function (req, res) {
@@ -226,7 +406,16 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
     };
   });
 
-//delete existing user (deregistration)
+/**
+*Required fields:
+*@param {string|number} username
+*@description Endpoint - unregister / delete account - an authenticated user can delete their account using a delete request.
+*@method DELETE/[users]/[:username]
+*@example axios.delete('https://myflix-project.herokuapp.com/users/JohnDoe123')
+* 
+*Expected outcome: 
+*"User: JohnDoe123 was deleted."
+*/
 app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), function (req, res) {
   if (req.user.Username === req.params.Username) {
     Users.findOneAndRemove({ Username: req.params.Username })
@@ -247,7 +436,17 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
   };
 });
 
-//FAVOURITES --- adds movies to favourites, prevents duplicates of the same movie being added to the favourites.
+/**
+*Required fields:
+*@param {string|number} username
+*@param {number} MovieID
+*@description Endpoint- add movie to user's favourites list using a post request.
+*@method POST/[users]/[:username]/[movies]/[:movie_id]
+*@example axios.post('https://myflix-project.herokuapp.com/users/823762/favourite_movies/The%20Beach')
+* 
+*Expected outcome: 
+*"This Movie: "The Beach" has been added to your list of favourites!!"
+*/
 app.post('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', { session: false }), function (req, res) {
   if (req.user.Username === req.params.Username) {
     Users.findOneAndUpdate({ Username: req.params.Username }, {
@@ -268,6 +467,17 @@ app.post('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', { sess
   };
 });
 
+/**
+*Required fields:
+*@param {string|number} username
+*@param {number} MovieID
+*@description Endpoint- add movie to user's favourites list using a post request.
+*@method DELETE/[users]/[:username]/[movies]/[:movie_id]
+*@example axios.delete('https://myflix-project.herokuapp.com/users/823762/favourite_movies/The%20Beach')
+* 
+*Expected outcome: 
+*"This movie: "The Beach" has been deleted."
+*/
 //deletes a movie from user's favourites list
 app.delete('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', { session: false }), function (req, res) {
   if (req.user.Username === req.params.Username) {
